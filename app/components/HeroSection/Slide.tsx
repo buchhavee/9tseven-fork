@@ -32,7 +32,7 @@ export default function Slide({ id, bg, image, video, slideCount, isActive, isVi
       />
 
       {/* Image — mounted only when this slide is current or an immediate neighbour. Doubles as poster for video slides. */}
-      {isVisible && <Image src={image} alt={`Hero slide ${id + 1}`} fill className="object-cover pointer-events-none" sizes="100vw" quality={65} priority={id === 0} draggable={false} fetchPriority={id === 0 ? "high" : "auto"} />}
+      {isVisible && <Image src={image} alt={`Hero slide ${id + 1}`} fill className="object-cover pointer-events-none" sizes="100vw" quality={85} priority={id === 0} draggable={false} fetchPriority={id === 0 ? "high" : "auto"} />}
 
       {/* Video — mounted only when slide is active so the network request is canceled when the user swipes away */}
       {video && isActive && <video src={video} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />}

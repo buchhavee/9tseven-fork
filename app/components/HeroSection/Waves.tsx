@@ -80,9 +80,16 @@ export function Waves({ className = "", strokeColor = "#ffffff", strokeWidth = 1
       }
     }
 
+    let resizeRaf = 0;
     function onResize() {
-      setSize();
-      setLines();
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        setSize();
+        setLines();
+        movePoints(performance.now());
+        drawLines();
+      });
     }
 
     function movePoints(time: number) {
@@ -155,6 +162,7 @@ export function Waves({ className = "", strokeColor = "#ffffff", strokeWidth = 1
 
     return () => {
       cancelAnimationFrame(raf);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
       window.removeEventListener("resize", onResize);
       motionQuery.removeEventListener("change", onMotionChange);
       paths.forEach((p) => p.remove());

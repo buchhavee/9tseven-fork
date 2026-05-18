@@ -25,7 +25,7 @@ export const stopMouseMove = {
 } as const;
 
 export function getAddToCartAriaLabel(needsSizeSelection: boolean) {
-  return needsSizeSelection ? "Select a size to add to cart" : "Add to cart";
+  return needsSizeSelection ? "Select size to add to cart" : "Add to cart";
 }
 
 export function useProductCardPurchase(product: Product) {

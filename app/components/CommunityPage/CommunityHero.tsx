@@ -20,8 +20,8 @@ export default function CommunityHero({ scrollYProgress: external }: CommunityHe
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(mq.matches);
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsMobile(!mq.matches);
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
@@ -43,7 +43,7 @@ export default function CommunityHero({ scrollYProgress: external }: CommunityHe
     <section ref={sectionRef} data-nav-theme="light" className="relative w-screen h-[75vh] min-h-128 md:h-screen md:min-h-176 flex items-center justify-center overflow-hidden">
       <motion.div className="absolute -inset-x-[8%] inset-y-0 md:inset-0" style={prefersReducedMotion ? undefined : { clipPath, willChange: "clip-path" }}>
         <motion.div className="absolute inset-0" style={prefersReducedMotion ? undefined : { scale, willChange: "transform" }}>
-          <Image src="/images/PhotoSection/photo-section6.webp" alt="Community Hero" fill priority sizes="100vw" quality={65} className="object-cover object-[center_60%]" />
+          <Image src="/images/PhotoSection/photo-section6.webp" alt="Community Hero" fill priority sizes="100vw" quality={85} className="object-cover object-[center_60%]" />
         </motion.div>
       </motion.div>
 
@@ -51,10 +51,10 @@ export default function CommunityHero({ scrollYProgress: external }: CommunityHe
         <h1 className="text-5xl font-bold leading-none tracking-tight text-white md:text-6xl lg:text-[10rem]">Community</h1>
       </div>
       <div className="absolute inset-x-0 bottom-25 flex flex-col items-center pointer-events-none">
-        <p className="text-md font-mono tracking-tight text-white uppercase">— More Than Running —</p>
+        <p className="text-md font-mono tracking-tight text-white uppercase">( More Than Running )</p>
       </div>
       <div className="absolute inset-x-0 top-25 flex flex-col items-center pointer-events-none">
-        <p className="text-md font-mono tracking-tight text-white uppercase">— 9TSEVEN — 2026 —</p>
+        <p className="text-md font-mono tracking-tight text-white uppercase">9TSEVEN © 2026</p>
       </div>
     </section>
   );

@@ -58,7 +58,7 @@ export default function ProductCard({ product, cardWidth, href, mobileLayout = "
         <div className="absolute inset-0 flex will-change-transform" style={{ transform: `translate3d(-${slidePosition * 100}%, 0, 0)` }}>
           {images.map((src, i) => (
             <div key={i} className="relative shrink-0 w-full h-full">
-              <Image src={src} alt={product.name} fill className="object-cover pointer-events-none" sizes="(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw" quality={65} draggable={false} priority={isFirstCard && i === 0} loading={isFirstCard && i === 0 ? undefined : "lazy"} />
+              <Image src={src} alt={product.name} fill className="object-cover pointer-events-none" sizes="800px" quality={85} draggable={false} priority={isFirstCard && i === 0} loading={isFirstCard && i === 0 ? undefined : "lazy"} />
             </div>
           ))}
         </div>
@@ -87,7 +87,7 @@ export default function ProductCard({ product, cardWidth, href, mobileLayout = "
           <div ref={scrollerRef} onScroll={handleMobileScroll} className="flex h-full w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: "none", msOverflowStyle: "none", touchAction: "pan-x" } as React.CSSProperties}>
             {images.map((src, i) => (
               <div key={i} className="relative shrink-0 w-full h-full snap-center">
-                <Image src={src} alt={product.name} fill className="object-cover pointer-events-none select-none" sizes="50vw" quality={65} draggable={false} priority={isFirstCard && i === 0} loading={isFirstCard && i === 0 ? undefined : "lazy"} />
+                <Image src={src} alt={product.name} fill className="object-cover pointer-events-none select-none" sizes="800px" quality={85} draggable={false} priority={isFirstCard && i === 0} loading={isFirstCard && i === 0 ? undefined : "lazy"} />
               </div>
             ))}
           </div>

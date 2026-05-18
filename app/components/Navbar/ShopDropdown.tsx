@@ -106,7 +106,7 @@ function ProductPreviewPanel({ category, items, onShopLinkClick }: ProductPrevie
         const href = `/products/${categorySlug(item.productType)}/${item.handle}`;
         return (
           <Link key={item.handle} href={href} onClick={onShopLinkClick} className="flex flex-col gap-1.5 group" style={tileStyle}>
-            <div className="w-full aspect-3/4 rounded-lg bg-surface overflow-hidden relative group-hover:bg-surface-hover transition-colors duration-fast">{item.image ? <Image src={item.image.url} alt={item.image.altText ?? item.title} fill sizes={`${TILE_WIDTH}px`} className="object-cover" /> : <span className="absolute inset-0 flex items-center justify-center text-fg-ghost text-xs">▣</span>}</div>
+            <div className="w-full aspect-3/4 rounded-lg bg-surface overflow-hidden relative group-hover:bg-surface-hover transition-colors duration-fast">{item.image ? <Image src={item.image.url} alt={item.image.altText ?? item.title} fill sizes={`${TILE_WIDTH}px`} quality={85} className="object-cover" /> : <span className="absolute inset-0 flex items-center justify-center text-fg-ghost text-xs">▣</span>}</div>
             <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-faint text-center group-hover:text-fg-muted transition-colors duration-fast truncate">{item.title}</span>
           </Link>
         );
