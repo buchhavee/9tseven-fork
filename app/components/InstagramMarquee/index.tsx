@@ -77,7 +77,7 @@ export default async function InstagramMarquee({ theme = "dark" }: Props = {}) {
         <div className="marquee-track flex w-max gap-1 md:gap-2.5">
           {[...images, ...images].map((img, i) => (
             <div key={`${img.id}-${i}`} className="relative aspect-square h-56 shrink-0 overflow-hidden rounded-sm transition-transform duration-slow ease-out md:h-80 md:group-hover:scale-[1] md:group-focus-visible:scale-[0.98]" aria-hidden={i >= images.length ? true : undefined}>
-              <Image src={img.url} alt={img.alt} width={img.width} height={img.height} sizes="(max-width: 768px) 224px, 320px" quality={65} className="h-full w-full object-cover" />
+              <Image src={img.url} alt={img.alt} width={img.width} height={img.height} sizes="(max-width: 768px) 224px, 320px" quality={85} className="h-full w-full object-cover" />
             </div>
           ))}
         </div>

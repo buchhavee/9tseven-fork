@@ -40,7 +40,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
           const out = soldOut.has(size);
           const selected = selectedSize === size;
           return (
-            <button key={size} type="button" disabled={out} onClick={() => setSelectedSize(size)} className={`px-4 py-2 text-[9px] font-mono tracking-eyebrow uppercase border transition-colors duration-fast ${out ? "border-ink/10 text-ink-faint line-through cursor-not-allowed" : selected ? "border-ink bg-ink text-fg" : "border-ink/20 text-ink-subtle hover:border-ink hover:text-ink"}`}>
+            <button key={size} type="button" disabled={out} onClick={() => setSelectedSize(size)} className={`px-4 py-2 text-[9px] font-mono font-bold tracking-eyebrow uppercase border transition-colors duration-fast ${out ? "border-ink/10 text-ink-faint line-through cursor-not-allowed" : selected ? "border-ink bg-ink text-fg" : "border-ink/20 text-ink-subtle hover:border-ink hover:text-ink"}`}>
               {size}
             </button>
           );
@@ -54,7 +54,6 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
       {pending ? "Adding…" : hasSizes && !selectedSize ? (product.isSoldOut ? "Sold out" : "Select size") : "Add to cart"}
     </button>
   );
-  console.log(product.isSoldOut);
   const onSale = product.compareAtPrice !== null && product.compareAtPrice > product.price;
   const formatPrice = (n: number) => n.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const priceLabel = (
@@ -79,7 +78,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
           <div className="row-start-1 col-start-1 flex flex-col">
             {images.map((src, i) => (
               <div key={`${src}-${i}`} className="relative w-full aspect-4/5 bg-light-grey">
-                <Image src={src} alt={`${product.name} — image ${i + 1}`} fill className="object-cover" priority={i === 0} sizes="(min-width: 768px) 60vw, 100vw" quality={65} />
+                <Image src={src} alt={`${product.name} — image ${i + 1}`} fill className="object-cover" priority={i === 0} sizes="(min-width: 768px) 60vw, 100vw" quality={85} />
               </div>
             ))}
           </div>

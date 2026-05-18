@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Slide from "./Slide";
-import SlideIndicator from "./SlideIndicator";
+import { SlideIndicatorMobile, SlideIndicatorDesktop } from "./SlideIndicator";
 import HeroOverlayText from "./HeroOverlayText";
 import HeroLogo3D from "./HeroLogo3D";
 import { useSlider } from "./hooks/useSlider";
@@ -19,7 +19,6 @@ export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
   const { current, slideWidth, containerRef, x, handleDragEnd, prev, next, nextLooping, goTo } = useSlider(slides.length);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Track which slides have been within ±1 of current. Once visited, stay mounted to avoid refetch.
   const mountedRef = useRef<Set<number>>(new Set([0]));
   const [, force] = useState(0);
   useEffect(() => {
@@ -90,13 +89,15 @@ export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
         <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={2000} height={1283} className="block p-6 w-full h-auto" style={{ width: "100%", height: "auto" }} priority />
       </div>
 
-      {/* Desktop: heading bottom-left, logo centered bottom */}
-      <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10 pointer-events-none md:w-25">
-        <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={2000} height={1283} className="block w-full h-auto" style={{ width: "100%", height: "auto" }} priority />
-      </div>
-      <HeroOverlayText current={current} slides={slides} className="hidden md:block absolute z-10 md:bottom-16 md:left-8" />
+      <SlideIndicatorMobile current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} />
 
-      <SlideIndicator current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} />
+      <div className="hidden md:grid absolute bottom-12 left-8 right-8 z-10 grid-cols-3 items-end pointer-events-none">
+        <HeroOverlayText current={current} slides={slides} className="pointer-events-auto" />
+        <div className="w-25 justify-self-center block">
+          <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={2000} height={1283} className="block w-full h-auto" style={{ width: "100%", height: "auto" }} priority />
+        </div>
+        <SlideIndicatorDesktop current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} className="w-3/4 justify-self-end" />
+      </div>
     </section>
   );
 }

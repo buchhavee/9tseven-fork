@@ -22,7 +22,6 @@ export default function HeroOverlayText({ current, slides, className = "" }: Her
   return (
     <div className={className}>
       <Link href={slide.href} className="group/hero-text block">
-        {/* Heading — fixed-height clip box */}
         <div className="overflow-hidden" style={{ height: "clamp(2rem, 5vw, 3.6rem)" }}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.p key={`heading-${current}`} initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "-100%" }} transition={TEXT_TRANSITION} className="font-bold text-fg leading-[1.1] uppercase tracking-tight" style={{ fontSize: "clamp(1.75rem, 4.5vw, 3rem)" }}>
@@ -31,7 +30,6 @@ export default function HeroOverlayText({ current, slides, className = "" }: Her
           </AnimatePresence>
         </div>
 
-        {/* Subheading — fixed-height clip box */}
         <div className="overflow-hidden mt-1" style={{ height: "clamp(1.5rem, 3vw, 2rem)" }}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.p

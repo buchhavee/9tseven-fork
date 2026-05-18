@@ -14,9 +14,7 @@ interface NewsletterPopupClientProps {
 }
 
 const SEEN_KEY = "newsletterPopupSeen";
-const LOAD_KEY = "loadScreenSeen";
-const LOAD_POLL_MS = 100;
-const LOAD_POLL_TIMEOUT_MS = 8000;
+const SCROLL_THRESHOLD = 0.6;
 
 export default function NewsletterPopupClient({ title, body, image }: NewsletterPopupClientProps) {
   const lenis = useLenis();
@@ -28,20 +26,18 @@ export default function NewsletterPopupClient({ title, body, image }: Newsletter
   useEffect(() => {
     if (sessionStorage.getItem(SEEN_KEY)) return;
 
-    const tryOpen = () => {
-      if (!sessionStorage.getItem(LOAD_KEY)) return false;
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = window.scrollY / scrollable;
+      if (progress < SCROLL_THRESHOLD) return;
       sessionStorage.setItem(SEEN_KEY, "1");
       setOpen(true);
-      return true;
+      window.removeEventListener("scroll", onScroll);
     };
 
-    if (tryOpen()) return;
-    let elapsed = 0;
-    const id = setInterval(() => {
-      elapsed += LOAD_POLL_MS;
-      if (tryOpen() || elapsed >= LOAD_POLL_TIMEOUT_MS) clearInterval(id);
-    }, LOAD_POLL_MS);
-    return () => clearInterval(id);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
@@ -89,7 +85,7 @@ export default function NewsletterPopupClient({ title, body, image }: Newsletter
       {open && (
         <motion.div role="dialog" aria-modal="true" aria-labelledby="newsletter-popup-title" className="fixed inset-0 z-90 flex items-center justify-center bg-bg/60 px-6" onClick={() => setOpen(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25, ease: "easeOut" }}>
           <motion.div ref={dialogRef} onClick={(e) => e.stopPropagation()} className="relative w-[min(92vw,56rem)] bg-white text-ink shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-[clamp(0.25rem,0.5vw,0.5rem)]" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.25, ease: "easeOut" }}>
-            <Image src={image.url} alt={image.alt} width={image.width} height={image.height} className="w-full h-full object-cover max-h-[40vh] md:max-h-none" />
+            <Image src={image.url} alt={image.alt} width={image.width} height={image.height} quality={85} className="w-full h-full object-cover max-h-[40vh] md:max-h-none" />
             <div className="px-[clamp(1.25rem,3vw,3rem)] py-[clamp(1.75rem,3.5vw,3.5rem)] grid">
               <div>
                 <button type="button" onClick={() => setOpen(false)} aria-label="Close" className="absolute top-[clamp(0.5rem,1vw,1rem)] right-[clamp(0.5rem,1vw,1rem)] w-[clamp(1.75rem,2.5vw,2.5rem)] h-[clamp(1.75rem,2.5vw,2.5rem)] flex items-center justify-center rounded-full bg-ink md:bg-transparent text-fg md:text-ink-subtle hover:bg-ink/80 md:hover:bg-transparent md:hover:text-ink transition-colors duration-fast">

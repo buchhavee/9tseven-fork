@@ -6,8 +6,8 @@ export default function BrandStatementSection() {
   return (
     <section data-nav-theme="light" className="bg-white flex flex-col items-center px-10 pt-22.5 pb-20">
       {/* Brand line */}
-      <Tagline tone="ink-subtle" className="block text-[10px] mb-4.5">
-        9TSEVEN © 2025
+      <Tagline tone="ink-subtle" className="block text-[10px] mb-6">
+        9TSEVEN © 2026
       </Tagline>
 
       <div className="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center w-full mb-5">

@@ -15,9 +15,9 @@ export default function CommunitySection() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-8">
         <div className="flex flex-col items-center gap-10 md:flex-row md:gap-0">
           {/* Heading */}
-          <div className="flex-1 gap-4 flex flex-col items-start">
+          <div className="flex-1 gap-6 flex flex-col items-start">
             <Tagline>( COMMUNITY )</Tagline>
-            <h2 className="text-5xl font-bold leading-none tracking-tight text-ink md:text-[3.5rem] lg:text-[4.5rem] xl:text-[5.5rem] mt-2">
+            <h2 className="text-5xl font-bold leading-none tracking-tight text-ink md:text-[3.5rem] lg:text-[4.5rem] xl:text-[5.5rem]">
               Community.
               <br />
               Create a space for inspiration &amp; human connection.
