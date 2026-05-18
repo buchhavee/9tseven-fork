@@ -18,7 +18,7 @@ export default function ProductCardTags({ product }: ProductCardTagsProps) {
         </div>
       )}
       {right && (
-        <div className="absolute top-3 right-3 z-10 px-3 py-1.5 bg-ink pointer-events-none">
+        <div className={`absolute top-3 right-3 z-10 px-3 py-1.5 bg-ink ${product.isSoldOut ? "hidden md:block" : ""} pointer-events-none`}>
           <span className="flex text-[9px] tracking-eyebrow uppercase font-medium text-fg">{right}</span>
         </div>
       )}

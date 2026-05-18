@@ -2,18 +2,9 @@
 
 import { motion, AnimatePresence } from "motion/react";
 import type { Product } from "../types";
-import {
-  PriceDisplay,
-  SizeSelector,
-  getAddToCartAriaLabel,
-  stopMouseMove,
-  stopPointerEvents,
-  useProductCardPurchase,
-} from "./ProductCardInfoShared";
+import { PriceDisplay, SizeSelector, getAddToCartAriaLabel, stopMouseMove, stopPointerEvents, useProductCardPurchase } from "./ProductCardInfoShared";
 
-type ProductCardInfoProps =
-  | { product: Product; alwaysVisible: true; hovered?: never; mobileLayout?: never }
-  | { product: Product; alwaysVisible?: false; hovered: boolean; mobileLayout?: "overlay" | "stacked" };
+type ProductCardInfoProps = { product: Product; alwaysVisible: true; hovered?: never; mobileLayout?: never } | { product: Product; alwaysVisible?: false; hovered: boolean; mobileLayout?: "overlay" | "stacked" };
 
 const overlayPanelClassName = "absolute bottom-4 left-3.5 right-3.5 px-3 py-3 bg-white/95 border-t border-ink/10 z-20";
 
@@ -30,7 +21,7 @@ function InfoContent({ product }: { product: Product }) {
         {!product.isSoldOut && (
           <button type="button" onClick={handleAddToCart} disabled={!canAddToCart} aria-label={getAddToCartAriaLabel(needsSizeSelection)} className="shrink-0 flex items-center justify-center gap-1 px-3 h-7 bg-ink text-fg hover:bg-bg/80 transition-colors duration-base cursor-pointer disabled:bg-bg/30 disabled:cursor-default">
             <span className="text-[clamp(14px,1vw,16px)] leading-none font-light -translate-y-px">+</span>
-            <span className="text-[clamp(8px,0.65vw,10px)] tracking-label uppercase font-medium leading-none">{pending ? "Adding…" : "Add to cart"}</span>
+            <span className="text-[clamp(8px,0.65vw,10px)] tracking-label uppercase font-medium leading-none">{pending ? "Adding…" : needsSizeSelection ? "Select a size" : "Add to cart"}</span>
           </button>
         )}
       </div>
