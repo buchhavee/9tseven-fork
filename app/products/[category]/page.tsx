@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import CategoryMarquee from "../components/CategoryMarquee";
 import CategoryProducts from "../components/CategoryProducts";
@@ -19,6 +20,30 @@ function marqueeLabel(slug: string, tag: string | undefined): string {
     .split("-")
     .map((w) => w.toUpperCase())
     .join(" ");
+}
+
+function titleCaseLabel(slug: string): string {
+  return slug
+    .split("-")
+    .map((w) => (w.length === 0 ? w : w[0].toUpperCase() + w.slice(1)))
+    .join(" ");
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}): Promise<Metadata> {
+  const { category } = await params;
+  const slug = category.toLowerCase();
+  const label = titleCaseLabel(slug);
+  const labelLower = label.toLowerCase();
+  return {
+    title: label,
+    description: `Shop 9TSEVEN ${labelLower} — running ${labelLower} built for performance and the lifestyle around it.`,
+    alternates: { canonical: `/products/${slug}` },
+    openGraph: { url: `/products/${slug}` },
+  };
 }
 
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
