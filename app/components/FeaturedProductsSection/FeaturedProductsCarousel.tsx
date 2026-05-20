@@ -9,7 +9,8 @@ import { CARD_GAP } from "./constants";
 import type { Product } from "./types";
 
 export default function FeaturedProductsSection({ products }: { products: Product[] }) {
-  const { current, cardWidth, pageCount, containerRef, x, handleDragEnd, dragConstraintsLeft, prev, next, snapTo } = useProductCarousel(products.length);
+  const { current, cardWidth, visibleCards, pageCount, containerRef, x, handleDragEnd, dragConstraintsLeft, prev, next, snapTo } = useProductCarousel(products.length);
+  const compactOverlay = visibleCards <= 2;
 
   return (
     <section data-nav-theme="light" className="w-full bg-white py-14 select-none">
@@ -26,7 +27,7 @@ export default function FeaturedProductsSection({ products }: { products: Produc
       <div ref={containerRef} className="w-full overflow-hidden">
         <motion.div className="flex" style={{ x, gap: CARD_GAP, cursor: "grab" }} drag="x" dragConstraints={{ left: dragConstraintsLeft(), right: 0 }} dragElastic={0.06} dragMomentum={false} onDragEnd={handleDragEnd} whileDrag={{ cursor: "grabbing" }}>
           {products.map((product, i) => (
-            <ProductCard key={product.id} product={product} cardWidth={cardWidth} href={`/products/${product.category.toLowerCase()}/${product.handle}`} isFirstCard={i === 0} />
+            <ProductCard key={product.id} product={product} cardWidth={cardWidth} href={`/products/${product.category.toLowerCase()}/${product.handle}`} isFirstCard={i === 0} compactOverlay={compactOverlay} />
           ))}
         </motion.div>
       </div>

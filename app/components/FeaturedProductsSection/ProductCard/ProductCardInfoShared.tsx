@@ -65,10 +65,10 @@ export function PriceDisplay({ product, className, compareAtClassName }: { produ
   const onSale = compareAtPrice !== null && compareAtPrice > price;
 
   return (
-    <p className={className}>
-      DKK {formatPrice(price)}
+    <div className={className}>
       {onSale && <span className={compareAtClassName}>DKK {formatPrice(compareAtPrice)}</span>}
-    </p>
+      <span className="block">DKK {formatPrice(price)}</span>
+    </div>
   );
 }
 
