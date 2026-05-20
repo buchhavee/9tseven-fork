@@ -16,7 +16,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const policies = await getPolicies();
-  return { title: `${policies[slug].title} – 9TSEVEN` };
+  return {
+    title: policies[slug].title,
+    alternates: { canonical: `/${slug}` },
+    openGraph: { url: `/${slug}` },
+  };
 }
 
 export default async function Page({

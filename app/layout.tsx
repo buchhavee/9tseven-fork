@@ -11,7 +11,6 @@ import { CartProvider } from "./context/CartContext";
 
 const PRE_HYDRATION_SCRIPT = `try{if(sessionStorage.getItem('loadScreenSeen'))document.documentElement.setAttribute('data-load-seen','1');}catch(e){}`;
 
-// Inject Typekit CSS after parse so it doesn't block first paint.
 const TYPEKIT_LOAD_SCRIPT = `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://use.typekit.net/srx3ckv.css';document.head.appendChild(l);})();`;
 
 const openSauceOne = localFont({
@@ -36,8 +35,35 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "9TSEVEN",
-  description: "More than running",
+  metadataBase: new URL("https://9tseven.com"),
+  title: {
+    default: "9TSEVEN — More than running",
+    template: "%s — 9TSEVEN",
+  },
+  description:
+    "9TSEVEN is a running brand and community. Technical running apparel and accessories for runners who live the lifestyle.",
+  applicationName: "9TSEVEN",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "9TSEVEN",
+    locale: "en_US",
+    url: "https://9tseven.com",
+    title: "9TSEVEN — More than running",
+    description:
+      "Running apparel and community for runners who live the lifestyle.",
+    images: [
+      { url: "/og.jpg", width: 1200, height: 630, alt: "9TSEVEN" },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "9TSEVEN — More than running",
+    description:
+      "Running apparel and community for runners who live the lifestyle.",
+    images: ["/og.jpg"],
+  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
