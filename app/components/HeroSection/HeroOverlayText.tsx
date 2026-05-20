@@ -30,7 +30,7 @@ export default function HeroOverlayText({ current, slides, className = "" }: Her
           </AnimatePresence>
         </div>
 
-        <div className="overflow-hidden mt-1" style={{ height: "clamp(1.5rem, 3vw, 2rem)" }}>
+        <div className="overflow-hidden w-full mt-1" style={{ height: "clamp(1.5rem, 3vw, 2rem)" }}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={`sub-${current}`}
@@ -38,7 +38,7 @@ export default function HeroOverlayText({ current, slides, className = "" }: Her
               animate={{ y: 0 }}
               exit={{ y: "-100%" }}
               transition={{ ...TEXT_TRANSITION, delay: 0.06 }}
-              className="
+              className="max-w-full text-nowrap
                 font-bold text-fg-subtle
                 group-hover/hero-text:text-fg
                 transition-colors duration-slow

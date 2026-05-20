@@ -80,21 +80,19 @@ export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
         </motion.div>
       </div>
 
-      {/* 3D logo — centered, translucent glass treatment */}
       <HeroLogo3D />
 
-      {/* Mobile: heading at bottom-left, logo centered in the hero */}
       <HeroOverlayText current={current} slides={slides} className="md:hidden absolute z-10 bottom-24 left-8 right-8" />
       <div className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none w-50">
-        <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={2000} height={1283} className="block p-6 w-full h-auto" style={{ width: "100%", height: "auto" }} priority />
+        <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={1200} height={1200} className="block p-6 w-full h-auto" style={{ width: "100%", height: "auto" }} priority />
       </div>
 
       <SlideIndicatorMobile current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} />
 
-      <div className="hidden md:grid absolute bottom-12 left-8 right-8 z-10 grid-cols-3 items-end pointer-events-none">
+      <div className="hidden md:grid absolute bottom-12 left-8 right-8 z-10 grid-cols-2 items-end pointer-events-none">
         <HeroOverlayText current={current} slides={slides} className="pointer-events-auto" />
-        <div className="w-25 justify-self-center block">
-          <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={2000} height={1283} className="block w-full h-auto" style={{ width: "100%", height: "auto" }} priority />
+        <div className="w-25 md:hidden justify-self-center block">
+          <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={1200} height={1200} className="block w-full h-auto md:hidden" style={{ width: "100%", height: "auto" }} priority />
         </div>
         <SlideIndicatorDesktop current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} className="w-3/4 justify-self-end" />
       </div>

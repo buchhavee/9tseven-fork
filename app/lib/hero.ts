@@ -40,7 +40,9 @@ function fieldMap(fields: FieldNode[]): Partial<Record<string, FieldNode>> {
   return Object.fromEntries(fields.map((f) => [f.key, f]));
 }
 
-function buildSlide(fields: FieldNode[], id: number): HeroSlide | null {
+type SortableSlide = Omit<HeroSlide, "id"> & { order: number };
+
+function buildSlide(fields: FieldNode[]): SortableSlide | null {
   const f = fieldMap(fields);
 
   const heading = f.heading?.value;
@@ -56,7 +58,11 @@ function buildSlide(fields: FieldNode[], id: number): HeroSlide | null {
 
   if (!heading || !subheading || !linkUrlRaw || !bg || !image) return null;
 
-  return { id, bg, image, video, heading, subheading, href: toStorefrontPath(linkUrlRaw) };
+  const orderRaw = f.order?.value;
+  const orderParsed = orderRaw != null ? Number(orderRaw) : NaN;
+  const order = Number.isFinite(orderParsed) ? orderParsed : Number.MAX_SAFE_INTEGER;
+
+  return { order, bg, image, video, heading, subheading, href: toStorefrontPath(linkUrlRaw) };
 }
 
 export const getHeroSlides = cache(async (): Promise<HeroSlide[]> => {
@@ -65,8 +71,10 @@ export const getHeroSlides = cache(async (): Promise<HeroSlide[]> => {
     if (errors || !data) throw new Error(`Shopify errors: ${JSON.stringify(errors)}`);
 
     const slides = (data as HeroResponse).metaobjects.edges
-      .map(({ node }, i) => buildSlide(node.fields, i))
-      .filter((s): s is HeroSlide => s !== null);
+      .map(({ node }) => buildSlide(node.fields))
+      .filter((s): s is SortableSlide => s !== null)
+      .sort((a, b) => a.order - b.order)
+      .map(({ order: _order, ...rest }, i): HeroSlide => ({ id: i, ...rest }));
 
     if (slides.length === 0) throw new Error("No valid hero slides returned from Shopify");
     return slides;
