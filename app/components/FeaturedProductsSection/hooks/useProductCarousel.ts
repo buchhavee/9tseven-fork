@@ -4,8 +4,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useMotionValue, animate } from "motion/react";
 import { CARD_GAP, PEEK_AMOUNT } from "../constants";
 
-const MOBILE_BREAKPOINT = 640;
-const LARGE_BREAKPOINT = 1024;
+const MOBILE_BREAKPOINT = 730;
+const LARGE_BREAKPOINT = 1200;
+const XLARGE_BREAKPOINT = 1600;
 
 export function useProductCarousel(productCount: number) {
   const [current, setCurrent] = useState(0);
@@ -28,8 +29,9 @@ export function useProductCarousel(productCount: number) {
       const containerWidth = container.offsetWidth;
       const isMobile = containerWidth < MOBILE_BREAKPOINT;
       const isLarge = containerWidth >= LARGE_BREAKPOINT;
+      const isXLarge = containerWidth >= XLARGE_BREAKPOINT;
 
-      const visible = isMobile ? 1 : isLarge ? 3 : 2;
+      const visible = isMobile ? 1 : isXLarge ? 4 : isLarge ? 3 : 2;
       const pages = Math.ceil(productCount / visible);
       const peek = isMobile ? 0 : PEEK_AMOUNT;
       const w = Math.floor((containerWidth - CARD_GAP * visible - 1 - peek) / (isMobile ? 1.2 : visible));

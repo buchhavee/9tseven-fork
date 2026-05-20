@@ -16,9 +16,10 @@ interface ProductCardProps {
   mobileLayout?: "overlay" | "stacked";
   desktopInfo?: "hover" | "static";
   isFirstCard?: boolean;
+  compactOverlay?: boolean;
 }
 
-export default function ProductCard({ product, cardWidth, href, mobileLayout = "overlay", desktopInfo = "hover", isFirstCard = false }: ProductCardProps) {
+export default function ProductCard({ product, cardWidth, href, mobileLayout = "overlay", desktopInfo = "hover", isFirstCard = false, compactOverlay = false }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const [mobileIdx, setMobileIdx] = useState(0);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +46,7 @@ export default function ProductCard({ product, cardWidth, href, mobileLayout = "
     <div className={`cursor-pointer ${cardWidth === undefined ? "w-full" : "shrink-0"}`} style={cardWidth === undefined ? undefined : { width: cardWidth }} onClick={handleClick}>
       <div
         className={`${useMobileCarousel ? "hidden md:block" : ""} relative w-full bg-light-grey rounded-sm overflow-hidden group${product.isSoldOut ? " opacity-60 grayscale" : ""}`}
-        style={{ aspectRatio: "4 / 5" }}
+        style={{ aspectRatio: "2 / 3" }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => {
           setHovered(false);
@@ -75,15 +76,15 @@ export default function ProductCard({ product, cardWidth, href, mobileLayout = "
         )}
 
         {staticInfo ? (
-          <ProductCardInfo product={product} alwaysVisible />
+          <ProductCardInfo product={product} alwaysVisible compactOverlay={compactOverlay} />
         ) : (
-          <ProductCardInfo product={product} hovered={hovered} mobileLayout={mobileLayout} />
+          <ProductCardInfo product={product} hovered={hovered} mobileLayout={mobileLayout} compactOverlay={compactOverlay} />
         )}
       </div>
 
       {/* Mobile scroll-snap carousel */}
       {useMobileCarousel && (
-        <div className={`md:hidden relative w-full bg-light-grey rounded-sm overflow-hidden${product.isSoldOut ? " opacity-60 grayscale" : ""}`} style={{ aspectRatio: "4 / 5" }}>
+        <div className={`md:hidden relative w-full bg-light-grey rounded-sm overflow-hidden${product.isSoldOut ? " opacity-60 grayscale" : ""}`} style={{ aspectRatio: "2 / 3" }}>
           <div ref={scrollerRef} onScroll={handleMobileScroll} className="flex h-full w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: "none", msOverflowStyle: "none", touchAction: "pan-x" } as React.CSSProperties}>
             {images.map((src, i) => (
               <div key={i} className="relative shrink-0 w-full h-full snap-center">

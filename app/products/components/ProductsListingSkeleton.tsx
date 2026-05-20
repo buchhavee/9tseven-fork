@@ -9,7 +9,7 @@ export default function ProductsListingSkeleton() {
       <div className="w-full px-3 py-3">
         <div className="mx-auto grid grid-cols-2 lg:grid-cols-3 gap-2" aria-hidden="true">
           {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className="w-full bg-light-grey rounded-sm animate-pulse" style={{ aspectRatio: "4 / 5" }} />
+            <div key={i} className="w-full bg-light-grey rounded-sm animate-pulse" style={{ aspectRatio: "2 / 3" }} />
           ))}
         </div>
       </div>
