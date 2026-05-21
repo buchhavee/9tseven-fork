@@ -17,7 +17,8 @@ interface HeroSectionClientProps {
 
 export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
   const { current, slideWidth, containerRef, x, handleDragEnd, prev, next, nextLooping, goTo } = useSlider(slides.length);
-  const [isHovered, setIsHovered] = useState(false);
+  const [progressKey, setProgressKey] = useState(0);
+  const bumpProgress = useCallback(() => setProgressKey((k) => k + 1), []);
 
   const mountedRef = useRef<Set<number>>(new Set([0]));
   const [, force] = useState(0);
@@ -29,28 +30,31 @@ export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
     if (mountedRef.current.size !== before) force((n) => n + 1);
   }, [current, slides.length]);
 
-  const { reset } = useAutoSlide({ next: nextLooping, isPaused: isHovered });
+  const { reset } = useAutoSlide({ next: nextLooping });
 
   const handlePrev = useCallback(() => {
     reset();
+    bumpProgress();
     prev();
-  }, [reset, prev]);
+  }, [reset, bumpProgress, prev]);
 
   const handleNext = useCallback(() => {
     reset();
+    bumpProgress();
     next();
-  }, [reset, next]);
+  }, [reset, bumpProgress, next]);
 
   const handleGoTo = useCallback(
     (index: number) => {
       reset();
+      bumpProgress();
       goTo(index);
     },
-    [reset, goTo],
+    [reset, bumpProgress, goTo],
   );
 
   return (
-    <section data-nav-theme="dark" className="relative w-full h-[85svh] md:h-[90vh] min-h-160 overflow-hidden select-none" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <section data-nav-theme="dark" className="relative w-full h-[85svh] md:h-[90vh] min-h-160 overflow-hidden select-none">
       {/* Filmstrip container */}
       <div ref={containerRef} className="w-full h-full">
         <motion.div
@@ -70,6 +74,7 @@ export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
           dragMomentum={false}
           onDragEnd={(e, info) => {
             reset();
+            bumpProgress();
             handleDragEnd(e, info);
           }}
           whileDrag={{ cursor: "grabbing" }}
@@ -94,7 +99,7 @@ export default function HeroSectionClient({ slides }: HeroSectionClientProps) {
         <div className="w-25 md:hidden justify-self-center block">
           <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={1200} height={1200} className="block w-full h-auto md:hidden" style={{ width: "100%", height: "auto" }} priority />
         </div>
-        <SlideIndicatorDesktop current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} className="w-3/4 justify-self-end" />
+        <SlideIndicatorDesktop current={current} slides={slides} onPrev={handlePrev} onNext={handleNext} onGoTo={handleGoTo} className="w-3/4 justify-self-end" progressKey={progressKey} />
       </div>
     </section>
   );

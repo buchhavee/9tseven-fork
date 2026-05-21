@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     description:
       "Running apparel and community for runners who live the lifestyle.",
     images: [
-      { url: "/og.jpg", width: 1200, height: 630, alt: "9TSEVEN" },
+      { url: "/images/OG/OG.jpg", width: 1200, height: 630, alt: "9TSEVEN" },
     ],
   },
   twitter: {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: "9TSEVEN — More than running",
     description:
       "Running apparel and community for runners who live the lifestyle.",
-    images: ["/og.jpg"],
+    images: ["/images/OG/OG.jpg"],
   },
   robots: { index: true, follow: true },
 };

@@ -11,10 +11,6 @@ function resolveVariant(product: Product, selectedSize: string | null) {
   return product.variants[0] ?? null;
 }
 
-function formatPrice(value: number) {
-  return value.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-
 export const stopPointerEvents = {
   onClick: (e: React.SyntheticEvent) => e.stopPropagation(),
   onPointerDown: (e: React.SyntheticEvent) => e.stopPropagation(),
@@ -58,18 +54,6 @@ export function useProductCardPurchase(product: Product) {
     toggleSize,
     allSoldOut,
   };
-}
-
-export function PriceDisplay({ product, className, compareAtClassName }: { product: Product; className: string; compareAtClassName: string }) {
-  const { compareAtPrice, price } = product;
-  const onSale = compareAtPrice !== null && compareAtPrice > price;
-
-  return (
-    <div className={className}>
-      {onSale && <span className={compareAtClassName}>DKK {formatPrice(compareAtPrice)}</span>}
-      <span className="block">DKK {formatPrice(price)}</span>
-    </div>
-  );
 }
 
 function SizeOptionButton({ size, out, onToggle, className }: { size: string; out: boolean; onToggle: () => void; className: string }) {

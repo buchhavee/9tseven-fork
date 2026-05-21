@@ -4,7 +4,7 @@ import Tagline from "../Tagline";
 
 export default function BrandStatementSection() {
   return (
-    <section data-nav-theme="light" className="bg-white flex flex-col items-center px-10 pt-22.5 pb-20">
+    <section className="flex flex-col items-center px-10 pt-22.5 pb-12">
       {/* Brand line */}
       <Tagline tone="ink-subtle" className="block text-[10px] mb-6">
         9TSEVEN © 2026
@@ -17,7 +17,7 @@ export default function BrandStatementSection() {
       </div>
 
       {/* Body text */}
-      <p className="text-[11px] leading-[1.8] tracking-label text-ink-subtle max-w-100 text-center mb-13">Rooted in identity, shaped by culture, and driven by community. Our expression is a reflection of where we come from and where we&apos;re going.</p>
+      {/* <p className="text-[11px] leading-[1.8] tracking-label text-ink-subtle max-w-100 text-center mb-13">Rooted in identity, shaped by culture, and driven by community. Our expression is a reflection of where we come from and where we&apos;re going.</p> */}
 
       {/* Logo */}
       <Image src="/images/Logo/9t7.svg" alt="9TSEVEN" width={80} height={80} className="w-20 h-auto invert" />

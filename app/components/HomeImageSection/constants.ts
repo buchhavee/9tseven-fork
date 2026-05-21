@@ -13,7 +13,7 @@ export const PANELS: Panel[] = [
   {
     label: "Our Products",
     leftText: "Shop",
-    rightText: "[ View all ]",
+    rightText: "( View )",
     image: "/images/PhotoSection/photo-section1.webp",
     alt: "9TSEVEN products",
     href: "/products",
@@ -21,17 +21,17 @@ export const PANELS: Panel[] = [
   {
     label: "Our Mantra",
     leftText: "Mantra",
-    rightText: "[ Read more ]",
+    rightText: "( Read )",
     image: "/images/PhotoSection/photo-section4.webp",
     alt: "Our mantra",
     href: "/mantra",
   },
   {
     label: "Our Community",
-    leftText: "Social",
-    rightText: "[ Instagram ]",
+    leftText: "Community",
+    rightText: "( Explore )",
     image: "/images/PhotoSection/photo-section7.webp",
     alt: "Our community",
-    href: "https://www.instagram.com/9tseven_",
+    href: "/community",
   },
 ];

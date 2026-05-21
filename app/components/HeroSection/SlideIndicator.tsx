@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { HeroSlide } from "./types";
+import { AUTO_SLIDE_INTERVAL_MS } from "./hooks/useAutoSlide";
+import AnimatedCount from "../AnimatedCount";
 
 interface SlideIndicatorProps {
   current: number;
@@ -13,6 +15,7 @@ interface SlideIndicatorProps {
 
 interface SlideIndicatorDesktopProps extends SlideIndicatorProps {
   className?: string;
+  progressKey?: number;
 }
 
 const TEXT_TRANSITION = {
@@ -36,7 +39,8 @@ export function SlideIndicatorMobile({ current, slides, onPrev, onNext, onGoTo }
       </div>
 
       <span className="font-mono text-fg-muted text-sm tracking-eyebrow tabular-nums justify-self-center pointer-events-auto">
-        {String(current + 1).padStart(2, "0")}&nbsp;/&nbsp;
+        <AnimatedCount value={current + 1} />
+        &nbsp;/&nbsp;
         {String(slides.length).padStart(2, "0")}
       </span>
 
@@ -61,7 +65,7 @@ export function SlideIndicatorMobile({ current, slides, onPrev, onNext, onGoTo }
   );
 }
 
-export function SlideIndicatorDesktop({ current, slides, onPrev, onNext, onGoTo, className = "" }: SlideIndicatorDesktopProps) {
+export function SlideIndicatorDesktop({ current, slides, onPrev, onNext, onGoTo, className = "", progressKey = 0 }: SlideIndicatorDesktopProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -99,28 +103,40 @@ export function SlideIndicatorDesktop({ current, slides, onPrev, onNext, onGoTo,
               </div>
 
               <div
-                className="relative z-10 w-full h-px group-hover:h-1.25"
+                className="relative z-10 w-full h-px group-hover:h-1.25 overflow-hidden"
                 style={{
-                  backgroundColor: i === current ? "var(--color-fg)" : "var(--color-fg-subtle)",
+                  backgroundColor: i === current ? "var(--color-fg-muted)" : "var(--color-fg-subtle)",
                   transition: `height 400ms ${SMOOTH_EASE}, background-color 400ms ${SMOOTH_EASE}`,
                 }}
-              />
+              >
+                {i === current && (
+                  <div
+                    key={`progress-${current}-${progressKey}`}
+                    className="absolute inset-0 origin-left"
+                    style={{
+                      backgroundColor: "var(--color-fg)",
+                      animation: `slide-indicator-progress ${AUTO_SLIDE_INTERVAL_MS}ms linear infinite`,
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </button>
         ))}
       </div>
 
       <div className="flex items-center justify-between mt-4 pointer-events-auto">
-        <span className="font-mono text-fg-muted text-[0.65rem] tracking-eyebrow tabular-nums">
-          {String(current + 1).padStart(2, "0")}&nbsp;/&nbsp;
+        <span className="font-mono text-fg-muted text-sm tracking-eyebrow tabular-nums">
+          <AnimatedCount value={current + 1} />
+          &nbsp;/&nbsp;
           {String(slides.length).padStart(2, "0")}
         </span>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           <button onClick={onPrev} aria-label="Previous slide" className="text-fg-muted hover:text-fg transition-colors duration-base">
-            <ChevronLeft size={13} strokeWidth={1.25} />
+            <ChevronLeft size={22} strokeWidth={1.5} />
           </button>
           <button onClick={onNext} aria-label="Next slide" className="text-fg-muted hover:text-fg transition-colors duration-base">
-            <ChevronRight size={13} strokeWidth={1.25} />
+            <ChevronRight size={22} strokeWidth={1.5} />
           </button>
         </div>
       </div>

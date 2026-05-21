@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import ImageSection from "../components/CommunityPage/ImageSection";
+import StorySection from "../components/CommunityPage/StorySection";
+import MantraSection from "../components/CommunityPage/MantraSection";
+import InstagramMarquee from "../components/InstagramMarquee";
 
 export const metadata: Metadata = {
   title: "Community",
@@ -8,16 +11,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/community" },
   openGraph: { url: "/community" },
 };
-import InstagramMarquee from "../components/InstagramMarquee";
-import ParticleField from "../components/CommunityPage/ParticleField";
-import StorySection from "../components/CommunityPage/StorySection";
 
 export default function Community() {
   return (
     <main>
       <ImageSection />
       <StorySection />
-      <ParticleField />
+      <MantraSection />
       <InstagramMarquee />
     </main>
   );
