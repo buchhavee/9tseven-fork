@@ -13,8 +13,6 @@ function ImagePanel({ label, leftText, rightText, image, alt, href }: Panel) {
   const cursorTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Touch devices synthesize mouseenter/mousemove on tap. Bail so the
-    // cursor-text stays put at its initial top:24px and CSS handles visibility.
     if (window.matchMedia("(hover: none)").matches) return;
 
     const wrapper = wrapperRef.current;

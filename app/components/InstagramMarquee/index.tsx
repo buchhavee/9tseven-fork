@@ -57,7 +57,7 @@ export default async function InstagramMarquee({ theme = "dark" }: Props = {}) {
         </div>
 
         <div className="-order-1 md:order-1 md:flex md:justify-end">
-          <Tagline href={INSTAGRAM_URL} bracketed tone={t.headlineTone}>
+          <Tagline href={INSTAGRAM_URL} bracketed tone={t.headlineTone} className="text-nowrap">
             On Instagram
           </Tagline>
         </div>

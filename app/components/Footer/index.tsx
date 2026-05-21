@@ -1,5 +1,5 @@
 import Link from "next/link";
-import BrandLockup from "../BrandLockup";
+import BrandStatementSection from "../BrandStatementSection";
 import Newsletter from "../Newsletter";
 import Tagline from "../Tagline";
 
@@ -57,34 +57,47 @@ export default function Footer() {
           <p className="text-sm text-ink-subtle mt-1.5">Sølvgade 28, St. Th</p>
           <p className="text-sm text-ink-subtle mt-1.5">1307 København K</p>
           <p className="text-sm text-ink-subtle mt-1.5">Info@9tseven.com</p>
-          <Tagline tone="ink-faint" className="block text-[0.6rem] mt-1.5 normal-case">
-            © 2026 · 9TSEVEN
-          </Tagline>
         </div>
 
-        <nav className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-center md:justify-end md:gap-x-6 md:gap-y-2.5">
-          <div className="flex flex-col gap-2.5 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-2.5">
-            {POLICY_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} className="text-[0.6rem] tracking-label uppercase text-ink-subtle hover:text-ink transition-colors duration-fast">
-                {link.label}
-              </Link>
-            ))}
+        <nav className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start md:justify-end md:gap-x-6 md:gap-y-2.5">
+          <div className="flex items-start justify-between gap-4 md:contents">
+            <div className="flex flex-col gap-2.5 md:order-2 md:flex-wrap md:gap-x-6 md:gap-y-2.5">
+              {POLICY_LINKS.map((link) => (
+                <Link key={link.href} href={link.href} className="text-[0.6rem] tracking-label uppercase text-ink-subtle hover:text-ink transition-colors duration-fast">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <span className="hidden md:order-1 md:block w-px h-3 md:h-26 bg-tint-hover self-start mx-1" />
+            <div className="flex flex-wrap flex-col gap-x-6 gap-y-2.5">
+              {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+                <Link key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="inline-flex items-center gap-1.5 text-[0.6rem] tracking-label uppercase text-ink-subtle hover:text-ink transition-colors duration-fast">
+                  <Icon className={SOCIAL_ICON_CLASS} />
+                  {label}
+                </Link>
+              ))}
+            </div>
           </div>
           <span className="w-full h-px bg-tint-hover md:hidden" />
-          <span className="hidden md:block w-px h-3 bg-tint-hover self-center mx-1" />
-          <div className="flex flex-wrap gap-x-6 gap-y-2.5">
-            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-              <Link key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="inline-flex items-center gap-1.5 text-[0.6rem] tracking-label uppercase text-ink-subtle hover:text-ink transition-colors duration-fast">
-                <Icon className={SOCIAL_ICON_CLASS} />
-                {label}
-              </Link>
-            ))}
-          </div>
         </nav>
       </div>
 
-      {/* Big logo */}
-      <BrandLockup variant="onLight" />
+      <BrandStatementSection />
+      <div className="flex flex-col">
+        <Tagline tone="ink-faint" className="text-[0.6rem] m-1.5 normal-case">
+          © 2026 · 9TSEVEN · All rights reserved
+        </Tagline>
+        <Tagline tone="ink-faint" className="text-[0.6rem] m-1.5 normal-case">
+          Website by{" "}
+          <a href="mailto:buchhavee@gmail.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink transition-colors duration-fast">
+            Mads Christiansen
+          </a>{" "}
+          &{" "}
+          <a href="mailto:marius.engelbredt@gmail.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink transition-colors duration-fast">
+            Marius Engelbredt
+          </a>
+        </Tagline>
+      </div>
     </footer>
   );
 }

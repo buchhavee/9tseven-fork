@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import AnimatedCount from "../AnimatedCount";
 
 interface ProductCarouselIndicatorProps {
   current: number;
@@ -37,7 +38,8 @@ export default function ProductCarouselIndicator({ current, pageCount, onPrev, o
         {/* Counter + arrows */}
         <div className="flex items-center justify-between mt-4 pointer-events-auto">
           <span className="font-mono text-sm tracking-eyebrow tabular-nums text-ink-muted">
-            {String(current + 1).padStart(2, "0")}&nbsp;/&nbsp;
+            <AnimatedCount value={current + 1} />
+            &nbsp;/&nbsp;
             {String(pageCount).padStart(2, "0")}
           </span>
           <div className="flex items-center gap-5">

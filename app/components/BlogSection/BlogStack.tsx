@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from "react";
 import { useLenis } from "lenis/react";
 import type { BlogPost } from "./constants";
 import BlogPostCard from "./BlogPostCard";
+import Tagline from "../Tagline";
 
 const NAVBAR_H = 60;
 
@@ -49,10 +50,13 @@ export default function BlogStack({ posts }: Props) {
   };
 
   return (
-    <section ref={sectionRef} data-nav-theme="light" className="relative bg-white">
-      <div ref={headerRef} className="p-5 md:p-0 flex items-start justify-between">
-        <div className="hidden md:block md:w-1/2 h-22" />
-        <div className="flex flex-col justify-center gap-1 h-22 py-2 md:w-1/2">
+    <section ref={sectionRef} data-nav-theme="light" className="pt-12 relative bg-white">
+      <div ref={headerRef} className="px-6 md:px-8 py-5 flex flex-col gap-4 md:gap-0 md:flex-row items-start justify-between">
+        <div className="block md:w-1/2">
+          <Tagline>( BLOG POSTS )</Tagline>
+        </div>
+
+        <div className="flex flex-col gap-1 mb-4 md:w-1/2">
           <h2 className="text-2xl font-bold text-ink">Journal</h2>
           <p className="text-xl text-ink">Recent work, moments, and ongoing process.</p>
         </div>

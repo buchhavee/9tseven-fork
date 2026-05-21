@@ -85,6 +85,15 @@ html[data-load-seen] [data-load-screen] {
   }
 }
 
+@keyframes slide-indicator-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .marquee-track {
   animation: marquee-scroll 120s linear infinite;
   will-change: transform;
