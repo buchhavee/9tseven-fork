@@ -37,7 +37,7 @@
   --color-edge-strong: rgb(255 255 255 / 0.2);
 
   /* ── Overlays ──────────────────────────────────────────────────── */
-  --color-overlay: rgba(18, 18, 18, 0.7);
+  --color-overlay: rgba(18, 18, 18, 0.6);
 
   /* ── Typography — families ─────────────────────────────────────── */
   --font-sans: var(--font-open-sauce-one), sans-serif;

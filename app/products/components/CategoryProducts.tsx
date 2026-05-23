@@ -4,7 +4,7 @@ import { shopifyClient } from "@/app/lib/shopify";
 import { GET_PRODUCTS } from "@/app/lib/queries/products";
 import { toProduct, type StorefrontProduct } from "@/app/components/FeaturedProductsSection/types";
 
-const KNOWN_CATEGORIES = ["apparel", "accessories", "equipment", "new-arrivals"];
+const KNOWN_CATEGORIES = ["performance", "lifestyle", "accessories", "new-arrivals"];
 
 function categorySlugToProductType(slug: string): string {
   return slug
@@ -13,8 +13,14 @@ function categorySlugToProductType(slug: string): string {
     .join(" ");
 }
 
+function baseFilterForSlug(slug: string): string {
+  if (slug === "new-arrivals") return `tag:'new-arrival'`;
+  if (slug === "accessories") return `(product_type:'Accessories' OR product_type:'Equipment')`;
+  return `product_type:'${categorySlugToProductType(slug)}'`;
+}
+
 function buildShopifyQuery(slug: string, tag: string | undefined): string | undefined {
-  const baseFilter = slug === "new-arrivals" ? `tag:'new-arrival'` : `product_type:'${categorySlugToProductType(slug)}'`;
+  const baseFilter = baseFilterForSlug(slug);
   if (!tag) return baseFilter;
   return `${baseFilter} AND tag:'${tag}'`;
 }

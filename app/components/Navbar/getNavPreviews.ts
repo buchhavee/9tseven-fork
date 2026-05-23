@@ -11,9 +11,14 @@ type PreviewNode = {
   featuredImage: { url: string; altText: string | null } | null;
 };
 
+type PreviewEdges = { edges: { node: PreviewNode }[] };
+
 type PreviewResponse = {
-  newArrivals: { edges: { node: PreviewNode }[] };
-  allProducts: { edges: { node: PreviewNode }[] };
+  newArrivals: PreviewEdges;
+  performance: PreviewEdges;
+  lifestyle: PreviewEdges;
+  accessories: PreviewEdges;
+  allProducts: PreviewEdges;
 };
 
 function toPreviewItem(node: PreviewNode): PreviewItem {
@@ -27,20 +32,29 @@ function toPreviewItem(node: PreviewNode): PreviewItem {
   };
 }
 
+const EMPTY: NavPreviews = {
+  newArrivals: [],
+  performance: [],
+  lifestyle: [],
+  accessories: [],
+  allProducts: [],
+};
+
 export async function getNavPreviews(): Promise<NavPreviews> {
   try {
     const { data, errors } = await shopifyClient.request(GET_NAV_PREVIEWS, {
       variables: { previewCount: PREVIEW_COUNT },
     });
-    if (errors || !data) {
-      return { newArrivals: [], allProducts: [] };
-    }
+    if (errors || !data) return EMPTY;
     const typed = data as PreviewResponse;
     return {
       newArrivals: typed.newArrivals.edges.map((e) => toPreviewItem(e.node)),
+      performance: typed.performance.edges.map((e) => toPreviewItem(e.node)),
+      lifestyle: typed.lifestyle.edges.map((e) => toPreviewItem(e.node)),
+      accessories: typed.accessories.edges.map((e) => toPreviewItem(e.node)),
       allProducts: typed.allProducts.edges.map((e) => toPreviewItem(e.node)),
     };
   } catch {
-    return { newArrivals: [], allProducts: [] };
+    return EMPTY;
   }
 }
