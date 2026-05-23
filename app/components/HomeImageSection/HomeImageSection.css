@@ -18,7 +18,7 @@
   opacity: 1;
 }
 .home-image-panel .home-image-overlay {
-  background: transparent;
+  background: var(--color-ink-subtle);
   transition: background 0.6s ease;
 }
 .home-image-panel.is-hovered .home-image-overlay {
@@ -32,18 +32,8 @@
   opacity: 0;
   transition: opacity 0.4s ease;
   contain: strict;
-  -webkit-mask-image: radial-gradient(
-    ellipse 45% 30% at var(--cursor-x) var(--cursor-y),
-    #000 0%,
-    #000 25%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 45% 30% at var(--cursor-x) var(--cursor-y),
-    #000 0%,
-    #000 25%,
-    transparent 100%
-  );
+  -webkit-mask-image: radial-gradient(ellipse 45% 30% at var(--cursor-x) var(--cursor-y), #000 0%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 45% 30% at var(--cursor-x) var(--cursor-y), #000 0%, #000 25%, transparent 100%);
 }
 .home-image-panel.is-hovered .home-image-o-layer {
   opacity: 1;

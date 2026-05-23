@@ -13,7 +13,7 @@ export default function FeaturedProductsSection({ products }: { products: Produc
   const compactOverlay = visibleCards <= 2;
 
   return (
-    <section data-nav-theme="light" className="w-full bg-white py-14 select-none">
+    <section data-nav-theme="light" className="w-full bg-white py-8 sm:py-10 md:py-12 select-none">
       <header className="flex items-end justify-between gap-4 md:gap-6 px-6 md:px-8 mb-10">
         <div className="flex flex-col gap-4 md:gap-6">
           <Tagline className="text-nowrap">( FEATURED PRODUCTS )</Tagline>
