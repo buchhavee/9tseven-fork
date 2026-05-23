@@ -2,21 +2,20 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useLenis } from "lenis/react";
-import type { BlogPost, EventPost } from "./constants";
+import type { BlogPost } from "./constants";
 import BlogPostCard from "./BlogPostCard";
 import Tagline from "../Tagline";
 
 const NAVBAR_H = 60;
 
 interface Props {
-  posts: (BlogPost | EventPost)[];
-  source?: "blog" | "events";
+  posts: BlogPost[];
   title?: string;
   subtitle?: string;
   tagline?: string;
 }
 
-export default function BlogStack({ posts, source = "blog", title = "Journal", subtitle = "Recent work, moments, and ongoing process.", tagline = "( BLOG POSTS )" }: Props) {
+export default function BlogStack({ posts, title = "Journal", subtitle = "Recent work, moments, and ongoing process.", tagline = "( BLOG POSTS )" }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -70,14 +69,13 @@ export default function BlogStack({ posts, source = "blog", title = "Journal", s
         <BlogPostCard
           key={post.id}
           post={post}
-          source={source}
           index={index}
           top={tops[index]}
           onPeekHeight={(h) => updatePeek(index, h)}
           articleRef={(el) => {
             cardRefs.current[index] = el;
           }}
-          onClick={source === "blog" ? () => handleCardClick(index) : undefined}
+          onClick={() => handleCardClick(index)}
         />
       ))}
     </section>
