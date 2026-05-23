@@ -1,6 +1,6 @@
 export const GET_EVENT_POSTS = `
 query GetEventPostsV2 {
-  metaobjects(type: "eventcards", first: 50) {
+  metaobjects(type: "eventcards", first: 5) {
     edges {
       node {
         id

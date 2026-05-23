@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ImageSection from "../components/CommunityPage/ImageSection";
 import StorySection from "../components/CommunityPage/StorySection";
 import MantraSection from "../components/CommunityPage/MantraSection";
+import EventSection from "../components/EventSection";
 import InstagramMarquee from "../components/InstagramMarquee";
-import BlogSection from "../components/BlogSection";
 
 export const metadata: Metadata = {
   title: "Community",
@@ -18,7 +18,7 @@ export default function Community() {
       <ImageSection />
       <StorySection />
       <MantraSection />
-      <BlogSection source="events" title="Events" subtitle="Information about recent and upcoming events" tagline="( Events )" />
+      <EventSection />
       <InstagramMarquee />
     </main>
   );
