@@ -3,10 +3,11 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { BlogPost } from "./constants";
+import type { BlogPost, EventPost } from "./constants";
 
 interface Props {
-  post: BlogPost;
+  post: BlogPost | EventPost;
+  source: "blog" | "events";
   index: number;
   top: number;
   onPeekHeight: (height: number) => void;
@@ -14,7 +15,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export default function BlogPostCard({ post, index, top, onPeekHeight, articleRef, onClick }: Props) {
+export default function BlogPostCard({ post, source, index, top, onPeekHeight, articleRef, onClick }: Props) {
   const h3Ref = useRef<HTMLHeadingElement>(null);
   const onPeekHeightRef = useRef(onPeekHeight);
   onPeekHeightRef.current = onPeekHeight;
@@ -46,11 +47,16 @@ export default function BlogPostCard({ post, index, top, onPeekHeight, articleRe
     };
   }, []);
 
-  return (
+  const tag = "tag" in post ? post.tag : null;
+  const link = "link" in post ? post.link : null;
+  const slug = "slug" in post ? post.slug : null;
+  const href = source === "events" && slug ? `/community/events/${slug}` : null;
+
+  const article = (
     <article ref={articleRef} onClick={onClick} className="pb-4 md:pb-0 md:sticky bg-white border-t border-ink last:border-b flex flex-col md:flex-row cursor-pointer" style={{ zIndex: index + 1, top: `${top}px` }}>
       <div className="md:flex gap-2 lg:gap-5 p-5 md:w-1/2 shrink-0 min-w-0">
         <div className="flex flex-row md:flex-col justify-between gap-2 w-full md:w-20 xl:w-36 shrink-0 mb-2 md:mb-0">
-          <span className="font-mono text-[10px] xl:text-sm tracking-tight text-ink whitespace-nowrap">{post.tag}</span>
+          {tag && <span className="font-mono text-[10px] xl:text-sm tracking-tight text-ink whitespace-nowrap">{tag}</span>}
           {post.date && <span className="font-mono text-[10px] xl:text-sm tracking-tight text-ink whitespace-nowrap">{post.date}</span>}
         </div>
         <div className="flex flex-col gap-2.5 items-start min-w-0 flex-1">
@@ -58,9 +64,9 @@ export default function BlogPostCard({ post, index, top, onPeekHeight, articleRe
             {post.title}
           </h3>
           <p className="text-base tracking-tight text-ink whitespace-pre-wrap leading-normal line-clamp-19">{post.body}</p>
-          {post.link && (
-            <Link href={post.link.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="font-mono text-sm tracking-tight text-ink underline underline-offset-4 transition-opacity hover:opacity-50">
-              {post.link.text.toUpperCase()}
+          {link && (
+            <Link href={link.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="font-mono text-sm tracking-tight text-ink underline underline-offset-4 transition-opacity hover:opacity-50">
+              {link.text.toUpperCase()}
             </Link>
           )}
         </div>
@@ -71,5 +77,15 @@ export default function BlogPostCard({ post, index, top, onPeekHeight, articleRe
         <div className="absolute inset-0 bg-fg-ghost pointer-events-none" />
       </div>
     </article>
+  );
+
+  // `contents` lets the Link participate semantically (real anchor, prefetch, right-click)
+  // without inserting a layout box that would break the article's sticky positioning.
+  return href ? (
+    <Link href={href} className="contents">
+      {article}
+    </Link>
+  ) : (
+    article
   );
 }

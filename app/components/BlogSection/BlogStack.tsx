@@ -2,17 +2,21 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useLenis } from "lenis/react";
-import type { BlogPost } from "./constants";
+import type { BlogPost, EventPost } from "./constants";
 import BlogPostCard from "./BlogPostCard";
 import Tagline from "../Tagline";
 
 const NAVBAR_H = 60;
 
 interface Props {
-  posts: BlogPost[];
+  posts: (BlogPost | EventPost)[];
+  source?: "blog" | "events";
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
 }
 
-export default function BlogStack({ posts }: Props) {
+export default function BlogStack({ posts, source = "blog", title = "Journal", subtitle = "Recent work, moments, and ongoing process.", tagline = "( BLOG POSTS )" }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -53,12 +57,12 @@ export default function BlogStack({ posts }: Props) {
     <section ref={sectionRef} data-nav-theme="light" className="pt-12 relative bg-white">
       <div ref={headerRef} className="px-6 md:px-8 py-5 flex flex-col gap-4 md:gap-0 md:flex-row items-start justify-between">
         <div className="block md:w-1/2">
-          <Tagline>( BLOG POSTS )</Tagline>
+          <Tagline>{tagline}</Tagline>
         </div>
 
         <div className="flex flex-col gap-1 mb-4 md:w-1/2">
-          <h2 className="text-2xl font-bold text-ink">Journal</h2>
-          <p className="text-xl text-ink">Recent work, moments, and ongoing process.</p>
+          <h2 className="text-2xl font-bold text-ink">{title}</h2>
+          <p className="text-xl text-ink">{subtitle}</p>
         </div>
       </div>
 
@@ -66,13 +70,14 @@ export default function BlogStack({ posts }: Props) {
         <BlogPostCard
           key={post.id}
           post={post}
+          source={source}
           index={index}
           top={tops[index]}
           onPeekHeight={(h) => updatePeek(index, h)}
           articleRef={(el) => {
             cardRefs.current[index] = el;
           }}
-          onClick={() => handleCardClick(index)}
+          onClick={source === "blog" ? () => handleCardClick(index) : undefined}
         />
       ))}
     </section>
