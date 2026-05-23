@@ -82,7 +82,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
             setHoveredIndex(0);
             setShopOpen(false);
           }}
-          className="relative px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-subtle hover:text-fg transition-colors duration-fast z-10"
+          className="relative px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10"
         >
           Home
         </Link>
@@ -94,7 +94,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
             setHoveredIndex(1);
             setShopOpen(false);
           }}
-          className="relative px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-subtle hover:text-fg transition-colors duration-fast z-10"
+          className="relative px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10"
         >
           Community
         </Link>
@@ -106,7 +106,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
             setHoveredIndex(2);
             setShopOpen(false);
           }}
-          className="relative px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-subtle hover:text-fg transition-colors duration-fast z-10"
+          className="relative px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10"
         >
           Mantra
         </Link>
@@ -118,7 +118,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
             setHoveredIndex(3);
             setShopOpen(true);
           }}
-          className="relative flex items-center gap-1.5 px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-subtle hover:text-fg transition-colors duration-fast z-10"
+          className="relative flex items-center gap-1.5 px-4 py-2.5 text-xs tracking-eyebrow uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10"
         >
           Shop
           <ChevronDown size={10} strokeWidth={1.5} className={`transition-transform duration-base ${shopOpen ? "rotate-180" : ""}`} />
@@ -134,7 +134,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
             setHoveredIndex(4);
             setShopOpen(false);
           }}
-          className="relative flex items-center gap-2 px-3.5 py-2.5 text-xs tracking-eyebrow uppercase text-fg-subtle hover:text-fg transition-colors duration-fast z-10"
+          className="relative flex items-center gap-2 px-3.5 py-2.5 text-xs tracking-eyebrow uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10"
         >
           Cart ({totalQuantity})
           <ShoppingCart size={14} strokeWidth={1.5} />

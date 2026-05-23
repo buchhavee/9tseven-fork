@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus } from "lucide-react";
 import { SHOP_MENU } from "./constants";
-import type { NavPreviews, PreviewItem } from "./types";
+import type { NavPreviews, PreviewItem, ShopCategory } from "./types";
 
 // Layout knobs
 const PREVIEW_COUNT = 3;
@@ -28,9 +28,20 @@ function categorySlug(productType: string): string {
 }
 
 function previewsForHref(href: string, previews: NavPreviews): PreviewItem[] {
-  if (href === "/products/new-arrivals") return previews.newArrivals;
-  if (href === "/products") return previews.allProducts;
-  return [];
+  switch (href) {
+    case "/products/new-arrivals":
+      return previews.newArrivals;
+    case "/products/performance":
+      return previews.performance;
+    case "/products/lifestyle":
+      return previews.lifestyle;
+    case "/products/accessories":
+      return previews.accessories;
+    case "/products":
+      return previews.allProducts;
+    default:
+      return [];
+  }
 }
 
 export default function ShopDropdown({ shopOpen, previews, onShopLinkClick }: ShopDropdownProps) {
@@ -51,29 +62,18 @@ export default function ShopDropdown({ shopOpen, previews, onShopLinkClick }: Sh
             {SHOP_MENU.map((item, i) => (
               <div key={item.href} className="relative mx-1.5">
                 {activeCategory === i && <motion.div layoutId="dropdown-pill" className="absolute inset-0 rounded-[10px] bg-surface-hover" transition={{ type: "spring", stiffness: 400, damping: 30, mass: 0.8 }} />}
-                <Link href={item.href} onClick={onShopLinkClick} onMouseEnter={() => setActiveCategory(i)} className="relative block px-4 py-2.5 text-[0.68rem] tracking-label uppercase text-fg-subtle hover:text-fg transition-colors duration-fast z-10">
+                <Link href={item.href} onClick={onShopLinkClick} onMouseEnter={() => setActiveCategory(i)} className="relative block px-4 py-2.5 text-[0.68rem] tracking-label uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10">
                   {item.label}
                 </Link>
               </div>
             ))}
           </div>
 
-          {/* Right column — subcategories or product previews */}
+          {/* Right column — product previews */}
           <div className="overflow-hidden" style={{ width: `${RIGHT_COLUMN_WIDTH}px` }}>
             <AnimatePresence mode="wait">
-              <motion.div key={activeCategory} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 6 }} transition={{ duration: 0.12 }} className={category.type === "products" ? "h-full flex items-center" : ""}>
-                {category.type === "subcategories" ? (
-                  <div className="py-3">
-                    <p className="mx-1.5 px-4 py-2.5 text-[0.68rem] tracking-label uppercase text-fg">{category.label}</p>
-                    {category.subcategories.map((sub) => (
-                      <Link key={sub.href} href={sub.href} onClick={onShopLinkClick} className="block mx-1.5 px-4 py-2.5 text-[0.68rem] tracking-label uppercase text-fg-subtle hover:text-fg hover:bg-surface-hover rounded-[10px] transition-colors duration-fast">
-                        {sub.label}
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
-                  <ProductPreviewPanel category={category} items={previewsForHref(category.href, previews)} onShopLinkClick={onShopLinkClick} />
-                )}
+              <motion.div key={activeCategory} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 6 }} transition={{ duration: 0.12 }} className="h-full flex items-center">
+                <ProductPreviewPanel category={category} items={previewsForHref(category.href, previews)} onShopLinkClick={onShopLinkClick} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -84,14 +84,15 @@ export default function ShopDropdown({ shopOpen, previews, onShopLinkClick }: Sh
 }
 
 interface ProductPreviewPanelProps {
-  category: { label: string; href: string; type: "products" };
+  category: ShopCategory;
   items: PreviewItem[];
   onShopLinkClick: () => void;
 }
 
 function ProductPreviewPanel({ category, items, onShopLinkClick }: ProductPreviewPanelProps) {
   const previewItems = items.slice(0, PREVIEW_COUNT);
-  const placeholderCount = Math.max(0, PREVIEW_COUNT - previewItems.length);
+  const hasItems = previewItems.length > 0;
+  const placeholderCount = hasItems ? 0 : PREVIEW_COUNT;
   const tileStyle = { width: `${TILE_WIDTH}px`, flex: "none" as const };
 
   return (
@@ -107,7 +108,7 @@ function ProductPreviewPanel({ category, items, onShopLinkClick }: ProductPrevie
         return (
           <Link key={item.handle} href={href} onClick={onShopLinkClick} className="flex flex-col gap-1.5 group" style={tileStyle}>
             <div className="w-full aspect-3/4 rounded-lg bg-surface overflow-hidden relative group-hover:bg-surface-hover transition-colors duration-fast">{item.image ? <Image src={item.image.url} alt={item.image.altText ?? item.title} fill sizes={`${TILE_WIDTH}px`} quality={85} className="object-cover" /> : <span className="absolute inset-0 flex items-center justify-center text-fg-ghost text-xs">▣</span>}</div>
-            <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-faint text-center group-hover:text-fg-muted transition-colors duration-fast truncate">{item.title}</span>
+            <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-subtle text-center group-hover:text-fg transition-colors duration-fast truncate">{item.title}</span>
           </Link>
         );
       })}
@@ -116,7 +117,7 @@ function ProductPreviewPanel({ category, items, onShopLinkClick }: ProductPrevie
           <div className="w-full aspect-3/4 rounded-lg bg-surface border border-dashed border-edge-strong flex items-center justify-center">
             <span className="text-fg-ghost text-xs">▣</span>
           </div>
-          <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-faint text-center">Product_0{n + 1}</span>
+          <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-subtle text-center">Product_0{n + 1}</span>
         </div>
       ))}
 
@@ -124,7 +125,7 @@ function ProductPreviewPanel({ category, items, onShopLinkClick }: ProductPrevie
         <div className="w-full aspect-3/4 rounded-lg bg-surface hover:bg-surface-hover border border-edge hover:border-edge-strong transition-colors duration-fast flex items-center justify-center">
           <Plus className="text-fg-muted group-hover:text-fg-muted transition-colors duration-fast" size={32} strokeWidth={1.25} />
         </div>
-        <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-faint text-center group-hover:text-fg-muted transition-colors duration-fast">See all</span>
+        <span className="text-[0.6rem] tracking-eyebrow uppercase text-fg-subtle text-center group-hover:text-fg transition-colors duration-fast">View all</span>
       </Link>
     </div>
   );
