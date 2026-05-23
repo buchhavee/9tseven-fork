@@ -83,11 +83,11 @@ export default function Footer() {
       </div>
 
       <BrandStatementSection />
-      <div className="flex flex-col">
-        <Tagline tone="ink-faint" className="text-[0.6rem] m-1.5 normal-case">
+      <div className="flex flex-col items-center justify-center py-4">
+        <Tagline tone="ink-faint" className="text-[0.4rem]! md:text-[0.6rem]! normal-case">
           © 2026 · 9TSEVEN · All rights reserved
         </Tagline>
-        <Tagline tone="ink-faint" className="text-[0.6rem] m-1.5 normal-case">
+        <Tagline tone="ink-faint" className="text-[0.4rem]! md:text-[0.6rem]!  normal-case">
           Website by{" "}
           <a href="mailto:buchhavee@gmail.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink transition-colors duration-fast">
             Mads Christiansen

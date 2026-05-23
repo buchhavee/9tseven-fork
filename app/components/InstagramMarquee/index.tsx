@@ -51,12 +51,12 @@ export default async function InstagramMarquee({ theme = "dark" }: Props = {}) {
 
   return (
     <section data-nav-theme={t.navTheme} className={t.section}>
-      <div className="grid grid-cols-1 gap-2 px-6 py-20 md:grid-cols-3 md:gap-16 md:px-20 md:py-32">
-        <div className="md:col-span-2">
+      <div className="grid grid-cols-1 gap-10 px-6 py-12 sm:gap-12 sm:px-10 sm:py-14 md:px-20 md:py-16 lg:grid-cols-3 lg:gap-16">
+        <div className="lg:col-span-2">
           <h2 className={`text-3xl font-extrabold uppercase leading-[1.05] -tracking-wide ${t.heading} sm:text-4xl md:text-5xl lg:text-6xl`}>Follow the runs. The mornings, the miles, the people in between — on Instagram.</h2>
         </div>
 
-        <div className="-order-1 md:order-1 md:flex md:justify-end">
+        <div className="-order-1 lg:order-1 lg:flex lg:justify-end">
           <Tagline href={INSTAGRAM_URL} bracketed tone={t.headlineTone} className="text-nowrap">
             On Instagram
           </Tagline>

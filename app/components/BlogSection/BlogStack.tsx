@@ -54,7 +54,7 @@ export default function BlogStack({ posts, source = "blog", title = "Journal", s
   };
 
   return (
-    <section ref={sectionRef} data-nav-theme="light" className="pt-12 relative bg-white">
+    <section ref={sectionRef} data-nav-theme="light" className="relative bg-white py-12 sm:py-14 md:py-16">
       <div ref={headerRef} className="px-6 md:px-8 py-5 flex flex-col gap-4 md:gap-0 md:flex-row items-start justify-between">
         <div className="block md:w-1/2">
           <Tagline>{tagline}</Tagline>
