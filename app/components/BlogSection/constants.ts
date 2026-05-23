@@ -10,3 +10,14 @@ export type BlogPost = {
   link: { text: string; url: string } | null;
   date: string | null;
 };
+
+export type EventPost = {
+  id: string;
+  title: string;
+  body: string;
+  image: string;
+  alt: string;
+  date: string | null;
+  slug: string | null;
+  gallery: { url: string; alt: string | null }[];
+};
