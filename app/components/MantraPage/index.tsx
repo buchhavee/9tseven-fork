@@ -90,8 +90,10 @@ export default function MantraPage() {
 
   useEffect(() => {
     const calculate = () => {
-      // dot is w-7 = 28px, radius = 14px; scale must cover viewport diagonal from center
-      const diag = Math.sqrt((window.innerWidth / 2) ** 2 + (window.innerHeight / 2) ** 2);
+      // dot is w-7 = 28px, radius = 14px. The center dot isn't at the true viewport
+      // center (it sits below the text label), so use the full viewport diagonal as
+      // a safe radius to guarantee corner-to-corner coverage on every screen size.
+      const diag = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
       setMaxScale(Math.ceil(diag / 14) + 2);
     };
     calculate();
@@ -112,8 +114,20 @@ export default function MantraPage() {
     setLabelFadingOut(v > FILL_END);
     // Light nav while the white reveal is on screen; flip back to dark for the fade-out tail.
     setNavTheme(v >= WHITE_OUT_END && v < TAIL_START ? "light" : "dark");
-    setTextOpacity(remap(v, [[TEXT_IN, 0], [TEXT_PEAK, 1], [TEXT_OUT_START, 1], [TEXT_OUT_END, 0]]));
-    setFadeOpacity(remap(v, [[TAIL_START, 0], [1, 1]]));
+    setTextOpacity(
+      remap(v, [
+        [TEXT_IN, 0],
+        [TEXT_PEAK, 1],
+        [TEXT_OUT_START, 1],
+        [TEXT_OUT_END, 0],
+      ]),
+    );
+    setFadeOpacity(
+      remap(v, [
+        [TAIL_START, 0],
+        [1, 1],
+      ]),
+    );
   });
   // Plain CSS opacity (not a motion value) to avoid layer promotion that
   // disables subpixel font AA and makes the text look grey.
@@ -133,7 +147,7 @@ export default function MantraPage() {
 
         {/* Rotated side label */}
         <p
-          className="absolute left-4 pointer-events-none font-mono text-md tracking-display uppercase text-fg-ghost whitespace-nowrap"
+          className="absolute left-4 pointer-events-none font-mono text-xs tracking-display uppercase text-fg-ghost whitespace-nowrap"
           style={{
             top: "50%",
             transform: "rotate(-90deg) translateX(-50%)",
@@ -145,11 +159,11 @@ export default function MantraPage() {
 
         {/* Centered square container keeps the circle perfectly round */}
         <div className="absolute inset-0 px-2 flex flex-col items-center justify-center gap-10">
-          <div className="h-32 md:h-20 flex flex-col items-center justify-center gap-3 pointer-events-none">
-            <p className="font-mono text-base md:text-xl tabular-nums tracking-eyebrow text-fg leading-none transition-opacity duration-slow ease-out" style={{ opacity: labelVisible ? 1 : 0 }}>
+          <div className="h-32 md:h-20 flex flex-col items-center justify-start md:justify-center gap-3 pointer-events-none">
+            <p className="font-mono text-sm md:text-xl tabular-nums tracking-eyebrow text-fg leading-none transition-opacity duration-slow ease-out" style={{ opacity: labelVisible ? 1 : 0 }}>
               <AnimatedCount value={Math.max(filledCount, 1)} />.
             </p>
-            <p className="text-base md:text-xl text-pretty tracking-eyebrow uppercase text-fg text-center transition-opacity duration-slow ease-out" style={{ opacity: labelVisible ? 1 : 0 }}>
+            <p className="text-sm md:text-xl text-pretty tracking-eyebrow uppercase text-fg text-center transition-opacity duration-slow ease-out" style={{ opacity: labelVisible ? 1 : 0 }}>
               {TEXTS[filledCount] || TEXTS[1]}
             </p>
           </div>

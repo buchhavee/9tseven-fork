@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import MantraPage from "../components/MantraPage";
 import ShapesMarquee from "../components/MantraPage/ShapesMarquee";
-import ParticleField from "../components/CommunityPage/ParticleField";
+import ParticleField from "../components/MantraPage/ParticleField";
 
 export const metadata: Metadata = {
   title: "Mantra",

@@ -16,10 +16,10 @@ export default function ShapesMarquee() {
     <section data-nav-theme="dark" className="bg-bg">
       <div className="grid grid-cols-1 gap-10 px-6 py-20 md:grid-cols-2 md:grid-rows-1 md:gap-16 md:px-20 md:py-32">
         <div className="md:order-2 md:col-span-1">
-          <h2 className="text-3xl font-extrabold uppercase leading-[1.05] -tracking-wide text-fg sm:text-4xl md:text-5xl lg:text-6xl">The shapes that define the community.</h2>
+          <h2 className="text-3xl font-extrabold uppercase leading-[1.05] -tracking-wide text-fg sm:text-4xl md:text-5xl lg:text-6xl">Shapes of community</h2>
         </div>
 
-        <div className="md:order-1">
+        <div className="-order-1">
           <Tagline bracketed tone="fg-muted" className="text-nowrap">
             The Dots
           </Tagline>
