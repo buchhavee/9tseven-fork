@@ -14,6 +14,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
   const [shopOpen, setShopOpen] = useState(false);
   const [pill, setPill] = useState<PillStyle | null>(null);
   const { openCart, totalQuantity } = useCart();
+  const cartBadgeLabel = totalQuantity > 99 ? "99+" : String(totalQuantity);
 
   const islandRef = useRef<HTMLDivElement>(null);
   const homeRef = useRef<HTMLAnchorElement>(null);
@@ -136,8 +137,9 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
           }}
           className="relative flex items-center gap-2 px-3.5 py-2.5 text-xs tracking-eyebrow uppercase text-fg-muted hover:text-fg transition-colors duration-fast z-10"
         >
-          Cart ({totalQuantity})
+          Cart
           <ShoppingCart size={14} strokeWidth={1.5} />
+          {totalQuantity > 0 && <span className="min-w-4 h-4 px-1 rounded-full inline-flex items-center justify-center text-[9px] font-semibold tracking-normal tabular-nums bg-white text-ink normal-case">{cartBadgeLabel}</span>}
         </button>
       </div>
 

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
+import { ArrowUpRight } from "lucide-react";
 import type { HeroSlide } from "./types";
 
 interface HeroOverlayTextProps {
@@ -39,6 +40,7 @@ export default function HeroOverlayText({ current, slides, className = "" }: Her
               exit={{ y: "-100%" }}
               transition={{ ...TEXT_TRANSITION, delay: 0.06 }}
               className="max-w-full text-nowrap
+                inline-flex items-center gap-2
                 font-bold text-fg-subtle
                 group-hover/hero-text:text-fg
                 transition-colors duration-slow
@@ -48,6 +50,7 @@ export default function HeroOverlayText({ current, slides, className = "" }: Her
               style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)" }}
             >
               {slide.subheading}
+              <ArrowUpRight strokeWidth={1.75} className="w-[1.1em] h-[1.1em] transition-transform duration-slow group-hover/hero-text:translate-x-0.5 group-hover/hero-text:-translate-y-0.5" aria-hidden="true" />
             </motion.p>
           </AnimatePresence>
         </div>
