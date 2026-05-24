@@ -1,31 +1,31 @@
-.home-image-panel {
+.category-panel {
   --cursor-x: 50%;
   --cursor-y: 24px;
   contain: layout paint;
 }
-.home-image-panel .home-image-photo {
+.category-panel .category-photo {
   transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
-.home-image-panel.is-hovered .home-image-photo {
+.category-panel.is-hovered .category-photo {
   transform: scale(1.06);
 }
-.home-image-panel .home-image-cursor-text {
+.category-panel .category-cursor-text {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.home-image-panel.is-hovered .home-image-cursor-text {
+.category-panel.is-hovered .category-cursor-text {
   opacity: 1;
 }
-.home-image-panel .home-image-overlay {
+.category-panel .category-overlay {
   background: var(--color-ink-subtle);
   transition: background 0.6s ease;
 }
-.home-image-panel.is-hovered .home-image-overlay {
+.category-panel.is-hovered .category-overlay {
   background: var(--color-ink-faint);
 }
 
-.home-image-panel .home-image-o-layer {
+.category-panel .category-o-layer {
   background-image: radial-gradient(circle, transparent 0 1.4px, var(--color-fg-ghost) 1.6px 3px, transparent 3.2px);
   background-size: 9px 9px;
   background-repeat: repeat;
@@ -35,18 +35,18 @@
   -webkit-mask-image: radial-gradient(ellipse 45% 30% at var(--cursor-x) var(--cursor-y), #000 0%, #000 25%, transparent 100%);
   mask-image: radial-gradient(ellipse 45% 30% at var(--cursor-x) var(--cursor-y), #000 0%, #000 25%, transparent 100%);
 }
-.home-image-panel.is-hovered .home-image-o-layer {
+.category-panel.is-hovered .category-o-layer {
   opacity: 1;
 }
 
 @media (hover: none) {
-  .home-image-panel .home-image-cursor-text {
+  .category-panel .category-cursor-text {
     opacity: 1;
   }
-  .home-image-panel .home-image-overlay {
+  .category-panel .category-overlay {
     background: var(--color-ink-faint);
   }
-  .home-image-panel .home-image-o-layer {
+  .category-panel .category-o-layer {
     display: none;
   }
 }
