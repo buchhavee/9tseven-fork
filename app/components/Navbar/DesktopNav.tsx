@@ -8,12 +8,15 @@ import { motion, AnimatePresence } from "motion/react";
 import ShopDropdown from "./ShopDropdown";
 import { useCart } from "@/app/context/CartContext";
 import type { PillStyle, NavPreviews } from "./types";
+import { usePathname } from "next/navigation";
 
 export default function DesktopNav({ previews }: { previews: NavPreviews }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [shopOpen, setShopOpen] = useState(false);
   const [pill, setPill] = useState<PillStyle | null>(null);
   const { openCart, totalQuantity } = useCart();
+  const urlPath = usePathname();
+
   const cartBadgeLabel = totalQuantity > 99 ? "99+" : String(totalQuantity);
 
   const islandRef = useRef<HTMLDivElement>(null);
@@ -23,16 +26,26 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
   const shopTriggerRef = useRef<HTMLAnchorElement>(null);
   const cartRef = useRef<HTMLButtonElement>(null);
 
+  const items = [
+    { href: "/", match: (p: string) => p === "/", ref: homeRef },
+    { href: "/community", match: (p: string) => p.startsWith("/community"), ref: communityRef },
+    { href: "/mantra", match: (p: string) => p.startsWith("/mantra"), ref: mantraRef },
+    { href: "/products", match: (p: string) => p.startsWith("/products"), ref: shopTriggerRef },
+  ];
+
+  const isActive = items.findIndex((i) => i.match(urlPath));
+
   useLayoutEffect(() => {
     const itemRefs = [homeRef, communityRef, mantraRef, shopTriggerRef, cartRef];
+    const targetIndex = hoveredIndex ?? (isActive === -1 ? null : isActive);
 
-    if (hoveredIndex === null || !islandRef.current) {
+    if (targetIndex === null || !islandRef.current) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setPill(null);
       return;
     }
 
-    const el = itemRefs[hoveredIndex]?.current;
+    const el = itemRefs[targetIndex]?.current;
     const container = islandRef.current;
     if (!el) return;
 
@@ -44,7 +57,7 @@ export default function DesktopNav({ previews }: { previews: NavPreviews }) {
       width: elRect.width,
       height: elRect.height,
     });
-  }, [hoveredIndex]);
+  }, [hoveredIndex, isActive]);
 
   return (
     <div
