@@ -103,7 +103,7 @@ export function SlideIndicatorDesktop({ current, slides, onPrev, onNext, onGoTo,
               </div>
 
               <div
-                className="relative z-10 w-full h-px group-hover:h-1.25 overflow-hidden"
+                className="relative z-10 w-full h-1 group-hover:h-1.5 overflow-hidden"
                 style={{
                   backgroundColor: i === current ? "var(--color-fg-muted)" : "var(--color-fg-subtle)",
                   transition: `height 400ms ${SMOOTH_EASE}, background-color 400ms ${SMOOTH_EASE}`,
