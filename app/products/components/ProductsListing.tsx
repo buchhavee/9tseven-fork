@@ -62,8 +62,26 @@ export default function ProductsListing({ products }: ProductsListingProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-ink/10">
-        <div ref={containerRef} className="relative">
+      <div className="flex items-center justify-between gap-4 px-4 py-3 border-b border-ink/10">
+        <span className="text-[9px] tracking-label uppercase text-ink-faint shrink-0">{sorted.length} Products</span>
+
+        <nav aria-label="Categories" className="hidden md:flex items-center gap-1.5 flex-1 justify-center">
+          {CATEGORY_OPTIONS.map(({ label, href }) => {
+            const active = currentCategory?.href === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`text-[9px] tracking-eyebrow uppercase px-2.5 py-1 rounded-full transition-colors duration-fast ${active ? "bg-ink text-white" : "text-ink-muted hover:text-ink hover:bg-tint"}`}
+              >
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div ref={containerRef} className="relative shrink-0">
           <button type="button" onClick={() => setOpen((v) => !v)} aria-haspopup="menu" aria-expanded={open} className="flex items-center gap-2 text-[9px] tracking-eyebrow uppercase text-ink-muted border border-ink/20 px-3 py-1.5 hover:text-ink hover:border-ink/40 transition-colors duration-fast">
             <span aria-hidden="true">⇌</span>
             <span>Filter</span>
@@ -71,7 +89,7 @@ export default function ProductsListing({ products }: ProductsListingProps) {
 
           <AnimatePresence>
             {open && (
-              <motion.div role="menu" initial={{ opacity: 0, y: -4, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -4, scale: 0.98 }} transition={{ duration: 0.14, ease: "easeOut" }} style={{ transformOrigin: "top left" }} className="absolute left-0 top-[calc(100%+6px)] z-30 min-w-55 bg-white border border-ink/10 shadow-[0_8px_24px_rgb(0_0_0/0.08)] rounded-md overflow-hidden">
+              <motion.div role="menu" initial={{ opacity: 0, y: -4, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -4, scale: 0.98 }} transition={{ duration: 0.14, ease: "easeOut" }} style={{ transformOrigin: "top right" }} className="absolute right-0 top-[calc(100%+6px)] z-30 min-w-55 bg-white border border-ink/10 shadow-[0_8px_24px_rgb(0_0_0/0.08)] rounded-md overflow-hidden">
                 <div className="flex items-center justify-between px-3 pt-2.5 pb-1.5">
                   <span className="text-[8px] tracking-eyebrow uppercase text-ink-faint">Category</span>
                   {currentCategory && <span className="text-[8px] tracking-eyebrow uppercase text-ink-subtle">{currentCategory.label}</span>}
@@ -120,8 +138,6 @@ export default function ProductsListing({ products }: ProductsListingProps) {
             )}
           </AnimatePresence>
         </div>
-
-        <span className="text-[9px] tracking-label uppercase text-ink-faint">{sorted.length} Products</span>
       </div>
 
       <ProductsGrid products={sorted} />
