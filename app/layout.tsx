@@ -11,8 +11,6 @@ import { CartProvider } from "./context/CartContext";
 
 const PRE_HYDRATION_SCRIPT = `try{if(sessionStorage.getItem('loadScreenSeen'))document.documentElement.setAttribute('data-load-seen','1');}catch(e){}`;
 
-const TYPEKIT_LOAD_SCRIPT = `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://use.typekit.net/srx3ckv.css';document.head.appendChild(l);})();`;
-
 const openSauceOne = openSauce({
   variable: "--font-open-sauce-one",
   display: "swap",
@@ -74,12 +72,6 @@ export default function RootLayout({
     <html lang="en" className={`${openSauceOne.variable} ${jetbrainsMono.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: PRE_HYDRATION_SCRIPT }} />
-        <link rel="preconnect" href="https://use.typekit.net" crossOrigin="" />
-        <link rel="preconnect" href="https://p.typekit.net" crossOrigin="" />
-        <script dangerouslySetInnerHTML={{ __html: TYPEKIT_LOAD_SCRIPT }} />
-        <noscript>
-          <link rel="stylesheet" href="https://use.typekit.net/srx3ckv.css" />
-        </noscript>
       </head>
       <body className="min-h-full flex flex-col">
         <LoadScreen />

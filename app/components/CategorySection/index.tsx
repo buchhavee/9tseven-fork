@@ -80,7 +80,7 @@ function CategoryPanelView({ label, leftText, rightText, image, alt, href }: Cat
   }, []);
 
   return (
-    <div ref={wrapperRef} className="category-panel h-[60vh] md:h-full relative overflow-hidden">
+    <div ref={wrapperRef} data-nav-theme="dark" className="category-panel h-[60vh] md:h-full relative overflow-hidden">
       <div className="category-photo absolute inset-0">
         <Image src={image} alt={alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" quality={85} />
       </div>
