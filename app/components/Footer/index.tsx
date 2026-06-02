@@ -4,6 +4,7 @@ import Newsletter from "../Newsletter";
 import Tagline from "../Tagline";
 
 const POLICY_LINKS = [
+  { label: "Shop the Look", href: "/products/looks" },
   { label: "Return & Exchange", href: "/returns" },
   { label: "Terms of Service", href: "/terms" },
   { label: "FAQ", href: "/faq" },
