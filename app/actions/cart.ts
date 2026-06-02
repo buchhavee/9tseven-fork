@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { shopifyClient } from "@/app/lib/shopify";
 import { CART_QUERY, CART_CREATE_MUTATION, CART_LINES_ADD_MUTATION, CART_LINES_REMOVE_MUTATION, CART_LINES_UPDATE_MUTATION, type RawCart } from "@/app/lib/queries/cart";
+import { GET_PRODUCT_BY_HANDLE } from "@/app/lib/queries/products";
 import type { Cart } from "@/app/lib/cart-types";
 
 const CART_COOKIE_NAME = "shopify_cart_id";
@@ -88,6 +89,70 @@ export async function addToCart(merchandiseId: string, quantity: number): Promis
 
   const { data, errors } = await shopifyClient.request(CART_LINES_ADD_MUTATION, {
     variables: { cartId: existingCartId, lines: [{ merchandiseId, quantity }] },
+  });
+  if (errors) {
+    throw new Error(`Shopify CART_LINES_ADD failed: ${JSON.stringify(errors)}`);
+  }
+  const payload = (data as { cartLinesAdd: { cart: RawCart; userErrors: ShopifyUserError[] } } | undefined)?.cartLinesAdd;
+  assertNoUserErrors(payload?.userErrors, "cartLinesAdd");
+  if (!payload?.cart) throw new Error("Shopify cartLinesAdd returned no cart");
+
+  return flattenCart(payload.cart);
+}
+
+// Resolve a product handle to its first purchasable variant, then add it to the
+// cart. Used by the "Shop the Look" UGC cards, which carry product handles
+// rather than variant IDs.
+export async function addToCartByHandle(handle: string, quantity: number): Promise<Cart> {
+  const { data, errors } = await shopifyClient.request(GET_PRODUCT_BY_HANDLE, {
+    variables: { handle },
+  });
+  if (errors) {
+    throw new Error(`Shopify GET_PRODUCT_BY_HANDLE failed: ${JSON.stringify(errors)}`);
+  }
+
+  type VariantNode = { id: string; availableForSale: boolean };
+  const product = (data as { product: { variants: { edges: { node: VariantNode }[] } } | null } | undefined)?.product ?? null;
+  if (!product) {
+    throw new Error(`Shopify product not found for handle "${handle}"`);
+  }
+
+  const variants = product.variants.edges.map((edge) => edge.node);
+  const variant = variants.find((v) => v.availableForSale) ?? variants[0];
+  if (!variant) {
+    throw new Error(`Shopify product "${handle}" has no purchasable variant`);
+  }
+
+  return addToCart(variant.id, quantity);
+}
+
+// Add several specific variants (e.g. a full "Shop the Look" outfit) to the
+// cart in a single mutation — atomic, so no duplicate carts and one round trip.
+export async function addLinesToCart(merchandiseIds: readonly string[], quantity = 1): Promise<Cart> {
+  const lines = merchandiseIds.map((merchandiseId) => ({ merchandiseId, quantity }));
+  if (lines.length === 0) {
+    throw new Error("addLinesToCart called with no lines");
+  }
+
+  const existingCartId = await readCartIdCookie();
+
+  if (!existingCartId) {
+    const { data, errors } = await shopifyClient.request(CART_CREATE_MUTATION, {
+      variables: { input: { lines } },
+    });
+    if (errors) {
+      throw new Error(`Shopify CART_CREATE failed: ${JSON.stringify(errors)}`);
+    }
+    const payload = (data as { cartCreate: { cart: RawCart; userErrors: ShopifyUserError[] } } | undefined)?.cartCreate;
+    assertNoUserErrors(payload?.userErrors, "cartCreate");
+    if (!payload?.cart) throw new Error("Shopify cartCreate returned no cart");
+
+    await writeCartIdCookie(payload.cart.id);
+    return flattenCart(payload.cart);
+  }
+
+  const { data, errors } = await shopifyClient.request(CART_LINES_ADD_MUTATION, {
+    variables: { cartId: existingCartId, lines },
   });
   if (errors) {
     throw new Error(`Shopify CART_LINES_ADD failed: ${JSON.stringify(errors)}`);

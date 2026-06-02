@@ -4,7 +4,7 @@
 import { createContext, useContext, useState, useEffect, useTransition, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
-import { addToCart, getCart, removeFromCart, updateCartLine } from "@/app/actions/cart";
+import { addToCart, addToCartByHandle, addLinesToCart, getCart, removeFromCart, updateCartLine } from "@/app/actions/cart";
 import type { Cart } from "@/app/lib/cart-types";
 
 export type { Cart, CartLine, CartLinePrice } from "@/app/lib/cart-types";
@@ -16,6 +16,8 @@ interface CartContextValue {
   openCart: () => void;
   closeCart: () => void;
   addLine: (merchandiseId: string, quantity: number) => void;
+  addLineByHandle: (handle: string, quantity: number) => void;
+  addLines: (merchandiseIds: readonly string[]) => void;
   removeLine: (id: string) => void;
   updateLine: (id: string, quantity: number) => void;
   totalQuantity: number;
@@ -76,6 +78,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const addLineByHandle = (handle: string, quantity: number) => {
+    startTransition(async () => {
+      const next = await addToCartByHandle(handle, quantity);
+      setCart(next);
+    });
+  };
+
+  const addLines = (merchandiseIds: readonly string[]) => {
+    startTransition(async () => {
+      const next = await addLinesToCart(merchandiseIds);
+      setCart(next);
+    });
+  };
+
   const removeLine = (id: string) => {
     startTransition(async () => {
       const next = await removeFromCart(id);
@@ -90,7 +106,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  return <CartContext.Provider value={{ cart, isOpen, pending, openCart, closeCart, addLine, removeLine, updateLine, totalQuantity }}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ cart, isOpen, pending, openCart, closeCart, addLine, addLineByHandle, addLines, removeLine, updateLine, totalQuantity }}>{children}</CartContext.Provider>;
 }
 
 export function useCart(): CartContextValue {

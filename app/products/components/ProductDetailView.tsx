@@ -77,7 +77,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
 
           <div className="row-start-1 col-start-1 flex flex-col">
             {images.map((src, i) => (
-              <div key={`${src}-${i}`} className="relative w-full aspect-[2/3] bg-light-grey">
+              <div key={`${src}-${i}`} className="relative w-full aspect-2/3 bg-light-grey">
                 <Image src={src} alt={`${product.name} — image ${i + 1}`} fill className="object-cover" priority={i === 0} sizes="(min-width: 768px) 60vw, 100vw" quality={85} />
               </div>
             ))}
@@ -94,9 +94,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
         </div>
       </div>
 
-      {/* RIGHT / BOTTOM column: desktop sticky info panel + accordion (accordion shows on mobile too) */}
       <div className="w-full md:w-[40%] md:sticky md:top-16 md:self-start md:max-h-[calc(100vh-64px)] md:overflow-y-auto bg-white">
-        {/* Desktop-only header block */}
         <div className="hidden md:flex flex-col gap-6 px-6 md:px-10 py-8">
           <div>
             <p className="text-[9px] tracking-eyebrow uppercase text-ink-faint mb-1">{product.category}</p>
@@ -111,7 +109,6 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
           {addToCartButton}
         </div>
 
-        {/* Accordion — desktop: inside sticky panel; mobile: below sticky bottom bar */}
         <div className="px-6 md:px-10 pb-8 md:pt-0 pt-2">
           <ProductAccordion product={product} />
         </div>
