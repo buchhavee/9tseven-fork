@@ -30,7 +30,10 @@ export default function UGCLookShopper({ products }: UGCLookShopperProps) {
 
   const handleAddLook = () => {
     if (!allSizesChosen) return;
-    const merchandiseIds = products.map(variantFor).filter((v): v is NonNullable<typeof v> => v !== null).map((v) => v.id);
+    const merchandiseIds = products
+      .map(variantFor)
+      .filter((v): v is NonNullable<typeof v> => v !== null)
+      .map((v) => v.id);
     if (merchandiseIds.length === 0) return;
     addLines(merchandiseIds);
     openCart();
@@ -40,18 +43,13 @@ export default function UGCLookShopper({ products }: UGCLookShopperProps) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-1 md:gap-4 sm:grid-cols-3">
         {products.map((product) => (
           <UGCMiniProductCard key={product.handle} product={product} selectedSize={sizes[product.handle] ?? null} onSelectSize={(size) => selectSize(product.handle, size)} />
         ))}
       </div>
 
-      <button
-        type="button"
-        onClick={handleAddLook}
-        disabled={pending || !allSizesChosen}
-        className="inline-flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 font-mono text-[10px] tracking-eyebrow uppercase text-fg transition-colors duration-base hover:bg-ink/85 disabled:cursor-not-allowed disabled:opacity-40"
-      >
+      <button type="button" onClick={handleAddLook} disabled={pending || !allSizesChosen} className="inline-flex w-full items-center justify-center gap-2 bg-ink mx-1 px-6 py-4 font-mono text-[10px] tracking-eyebrow uppercase text-fg transition-colors duration-base hover:bg-ink/85 disabled:cursor-not-allowed disabled:opacity-40">
         {label}
       </button>
     </>

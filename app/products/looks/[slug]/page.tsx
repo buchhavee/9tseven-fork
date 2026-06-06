@@ -5,6 +5,7 @@ import Tagline from "@/app/components/Tagline";
 import InstagramMarquee from "@/app/components/InstagramMarquee";
 import UGCCard from "@/app/products/components/UGCCard";
 import UGCLookShopper from "@/app/products/components/UGCLookShopper";
+import BackButton from "@/app/products/components/BackButton";
 import { getUGCLookSlugs, getUGCLookView, type UGCLookProductView } from "@/app/lib/ugcLooks";
 
 const INSTAGRAM_URL = "https://www.instagram.com/9tseven_/";
@@ -61,16 +62,15 @@ export default async function ShopTheLookPage({ params }: ShopTheLookPageProps) 
 
   return (
     <main data-nav-theme="light" className="min-h-screen bg-white pt-16">
-      <section className="flex flex-col lg:flex-row">
+      <section className="mx-0.5 flex flex-col rounded-lg border border-ink/10 bg-grey p-1 md:mx-4 lg:mx-6 lg:flex-row">
         {/* Image side */}
-        <div className="relative aspect-4/5 w-full bg-light-grey sm:aspect-3/2 lg:aspect-auto lg:min-h-[88vh] lg:w-[52%]">
-          <Image src={look.imageSrc} alt={`${look.person.name} — ${look.person.tag}`} fill className="object-cover" sizes="(min-width: 1024px) 52vw, 100vw" quality={85} priority />
+        <div className="relative aspect-4/5 w-full overflow-hidden m-1 rounded-md bg-light-grey sm:aspect-3/2 lg:aspect-4/5 lg:w-2/5">
+          <Image src={look.imageSrc} alt={`${look.person.name} — ${look.person.tag}`} fill className="object-cover" sizes="(min-width: 1024px) 40vw, 100vw" quality={85} priority />
+          <BackButton className="absolute left-5 top-4 z-20" />
           <div aria-hidden className="absolute inset-0 bg-linear-to-t from-bg/90 from-0% via-bg/40 via-20% to-transparent to-50%" />
           <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 md:p-12">
-            <Tagline bracketed tone="fg-subtle">
-              Community Member
-            </Tagline>
-            <p className="text-3xl font-black uppercase leading-[0.95] tracking-tight text-fg md:text-5xl">{look.person.name}</p>
+            <Tagline tone="fg-subtle">( Community Member )</Tagline>
+            <p className="text-3xl font-black uppercase leading-[0.95] tracking-wide text-fg md:text-5xl">{look.person.name}</p>
             <a href={`https://www.instagram.com/${look.person.handle}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-mono text-[12px] tracking-label lowercase text-fg-subtle hover:text-fg transition-colors duration-base">
               <InstagramGlyph className="h-4 w-4" />@{look.person.handle}
             </a>
@@ -79,12 +79,10 @@ export default async function ShopTheLookPage({ params }: ShopTheLookPageProps) 
         </div>
 
         {/* Products side */}
-        <div className="flex w-full flex-col justify-center gap-8 px-6 py-12 md:px-12 md:py-16 lg:w-[48%] lg:px-14">
-          <div className="flex flex-col gap-4">
-            <Tagline bracketed tone="ink-subtle">
-              Shop the Look
-            </Tagline>
-            <h1 className="text-4xl font-black uppercase leading-none tracking-tight text-ink md:text-5xl">{name}&rsquo;s outfit.</h1>
+        <div className="flex w-full flex-col justify-center gap-8 py-12 md:px-6 md:py-12 lg:w-3/5 lg:px-14">
+          <div className="flex flex-col gap-4 p-2">
+            <Tagline tone="ink-subtle">( Shop the Look )</Tagline>
+            <h1 className="text-4xl font-black uppercase leading-none tracking-wide text-ink md:text-5xl">{name}'s outfit.</h1>
             <p className="max-w-md text-sm text-ink-subtle">
               Worn on the run, ready to shop. {name} is wearing the {joinTitles(look.products)}.
             </p>
@@ -98,9 +96,7 @@ export default async function ShopTheLookPage({ params }: ShopTheLookPageProps) 
       {otherLooks.length > 0 && (
         <section className="px-6 py-16 md:px-10 md:py-20 lg:px-20">
           <div className="flex flex-col items-center gap-3 text-center">
-            <Tagline bracketed tone="ink-subtle">
-              More than running
-            </Tagline>
+            <Tagline tone="ink-subtle">( More than running )</Tagline>
             <h2 className="max-w-2xl text-3xl font-black uppercase leading-[0.95] tracking-tight text-ink md:text-5xl">Other looks from the Community</h2>
           </div>
 
@@ -114,11 +110,9 @@ export default async function ShopTheLookPage({ params }: ShopTheLookPageProps) 
 
       {/* IG CTA */}
       <section className="flex flex-col items-center gap-6 px-6 py-16 text-center md:px-10 md:py-12 lg:px-20">
-        <Tagline bracketed tone="ink-subtle">
-          More than running
-        </Tagline>
-        <h2 className="max-w-3xl text-3xl font-black uppercase leading-[0.95] tracking-tight text-ink md:text-5xl lg:text-6xl">Share your look. Become part of the story.</h2>
-        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-ink/20 px-6 py-3.5 font-mono text-[10px] tracking-eyebrow uppercase text-ink transition-colors duration-base hover:bg-ink hover:text-fg">
+        <Tagline tone="ink-subtle">( INSTAGRAM )</Tagline>
+        <h2 className="max-w-3xl text-3xl font-black uppercase leading-[0.95] text-ink md:text-5xl lg:text-6xl">Share your look. Become part of the story.</h2>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-md border border-ink/20 px-6 py-3.5 font-mono text-[10px] tracking-eyebrow uppercase text-ink transition-colors duration-base hover:bg-ink hover:text-fg">
           <InstagramGlyph className="h-4 w-4" />
           Tag us on Instagram →
         </a>
